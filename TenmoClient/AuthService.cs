@@ -71,3 +71,18 @@ namespace TenmoClient
         }
     }
 }
+public List<Hotel> GetHotels()
+{
+    RestRequest request = new RestRequest(API_URL + "hotels");
+    IRestResponse<List<Hotel>> response = client.Get<List<Hotel>>(request);
+
+    if (response.ResponseStatus != ResponseStatus.Completed || !response.IsSuccessful)
+    {
+        ProcessErrorResponse(response);
+    }
+    else
+    {
+        return response.Data;
+    }
+    return null;
+}
