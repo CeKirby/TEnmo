@@ -7,7 +7,7 @@ using TenmoServer.Security.Models;
 
 namespace TenmoServer.DAO
 {
-    public class AccountSqlDAO
+    public class AccountSqlDAO : IAccountDAO
     {
         private readonly string connectionString;
 
@@ -16,9 +16,10 @@ namespace TenmoServer.DAO
             connectionString = dbConnectionString;
         }
 
-        public Account GetBalance(int accountId)
+         Account balance = new Account();
+        public decimal GetBalance(int accountId)
         {
-            Account returnBalance = null;
+            decimal returnBalance = 0;
 
             try
             {
@@ -30,9 +31,12 @@ namespace TenmoServer.DAO
                     cmd.Parameters.AddWithValue("@account_id", accountId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
-                    if (reader.HasRows && reader.Read())
+                    if (reader.HasRows && reader.Read()) 
+                        
                     {
-                        returnBalance = GetAccountFromReader(reader);
+                        
+                        balance = GetAccountFromReader(reader);
+                        returnBalance = balance.balance;
                     }
                 }
             }
@@ -45,7 +49,7 @@ namespace TenmoServer.DAO
         }
         private Account GetAccountFromReader(SqlDataReader reader)
         {
-            Account u = new Account()
+            Account account = new Account()
             {
                 account_id = Convert.ToInt32(reader["account_id"]),
                 user_id = Convert.ToInt32(reader["user_id"]),
@@ -53,7 +57,7 @@ namespace TenmoServer.DAO
                
             };
 
-            return u;
+            return account;
         }
     }
 }
