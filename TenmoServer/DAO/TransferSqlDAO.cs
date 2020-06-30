@@ -35,7 +35,7 @@ namespace TenmoServer.DAO
 
                     if (reader.HasRows && reader.Read())
                     {
-                        returnUser = GetUserFromReader(reader);
+                 //       returnUser = GetUserFromReader(reader);
                     }
                 }
             }
