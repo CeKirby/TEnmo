@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TenmoServer.DAO;
 using TenmoServer.Models;
 
 namespace TenmoServer.Controllers
@@ -14,6 +15,12 @@ namespace TenmoServer.Controllers
     [Authorize]
     public class TenmoController : ControllerBase
     {
+        private static IUserDAO _userDAO;
+        private static ITransferDAO _transferDAO;
+        public TenmoController()
+        {
+
+        }
 
         [HttpGet("users")]
         public List<User> ListUsers()
@@ -48,12 +55,21 @@ namespace TenmoServer.Controllers
 
         }
 
-        [HttpPut("transactions/{id}")]
-        public ActionResult<User> ApproveTransaction(int id)
-        {
-            return null;
-        }
 
+        [HttpPut("transfer/{id}")]
+        public ActionResult<Transfer> UpdateTransfer(int id, Transfer transferToUpdate, int updateCode)
+        {
+            Transfer existingTransfer = 
+            if(transferToUpdate = 
+            if(updateCode == 2)
+            {
+
+            } else if (updateCode == 3)
+            {
+
+            }
+            return
+        }
 
 
     }

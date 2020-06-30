@@ -10,7 +10,7 @@ namespace TenmoServer.DAO
     public class TransferSqlDAO : ITransferDAO
     {
         private readonly string connectionString;
-
+        Transfer transfer = new Transfer();
         public TransferSqlDAO(string dbConnectionString)
         {
             connectionString = dbConnectionString;
@@ -21,7 +21,7 @@ namespace TenmoServer.DAO
         }
 
         public string GetTransferStatus(int transferId)
-        {
+        { 
             string status = "Pending";
             try
             {
@@ -35,8 +35,21 @@ namespace TenmoServer.DAO
 
                     if (reader.HasRows && reader.Read())
                     {
-                        returnUser = GetUserFromReader(reader);
+                        transfer = GetTransferFromReader(reader);
                     }
+                    if(transfer.TransferStatusId == 1)
+                    {
+                        status = "Pending";
+                    }
+                    else if (transfer.TransferStatusId == 2)
+                    {
+                        status = "Approved";
+                    }
+                    else if (transfer.TransferStatusId == 3)
+                    {
+                        status = "Rejected";
+                    }
+
                 }
             }
             catch (SqlException)
