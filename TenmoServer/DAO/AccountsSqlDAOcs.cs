@@ -7,18 +7,18 @@ using TenmoServer.Security.Models;
 
 namespace TenmoServer.DAO
 {
-    public class AccountsSqlDAO
+    public class AccountSqlDAO
     {
         private readonly string connectionString;
 
-        public AccountsSqlDAO(string dbConnectionString)
+        public AccountSqlDAO(string dbConnectionString)
         {
             connectionString = dbConnectionString;
         }
 
-        public Accounts GetBalance(int AccountId)
+        public Account GetBalance(int accountId)
         {
-            Accounts returnBalance = null;
+            Account returnBalance = null;
 
             try
             {
@@ -26,8 +26,8 @@ namespace TenmoServer.DAO
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT balance FROM accounts WHERE accountid = @account_id", conn);
-                    cmd.Parameters.AddWithValue("@account_id", AccountId);
+                    SqlCommand cmd = new SqlCommand("SELECT balance FROM accounts WHERE account_id = @account_id", conn);
+                    cmd.Parameters.AddWithValue("@account_id", accountId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     if (reader.HasRows && reader.Read())
@@ -43,13 +43,13 @@ namespace TenmoServer.DAO
 
             return returnBalance;
         }
-        private Accounts GetAccountFromReader(SqlDataReader reader)
+        private Account GetAccountFromReader(SqlDataReader reader)
         {
-            Accounts u = new Accounts()
+            Account u = new Account()
             {
-                AccountId = Convert.ToInt32(reader["account_id"]),
-                UserId = Convert.ToInt32(reader["user_id"]),
-                Balance = Convert.ToInt32(reader["balance"]),
+                account_id = Convert.ToInt32(reader["account_id"]),
+                user_id = Convert.ToInt32(reader["user_id"]),
+                balance = Convert.ToInt32(reader["balance"]),
                
             };
 
