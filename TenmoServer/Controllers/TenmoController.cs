@@ -18,7 +18,7 @@ namespace TenmoServer.Controllers
 
     {
 
-        private static IAccountDAO accountDAO;
+        private static IAccountDAO _accountDAO;
 
 
         [HttpGet("users")]
@@ -52,18 +52,17 @@ namespace TenmoServer.Controllers
         }
 
         [HttpGet("user/account/{id}")]
-        public ActionResult<Account> GetAccountBalance(int id)
+        public ActionResult<decimal> GetAccountBalance(int id)
         {
-            //Account account = _accountDAO.Get(id);
-            //if (account != null)
-            //{
-            //    return account;
-            //}
-            //else
-            //{
-            //    return NotFound();
-            //}
-            return null;
+            decimal balance = _accountDAO.GetBalance(id);
+            if (balance > 0)
+            {
+                return balance;
+            }
+            else
+            {
+                return NotFound();
+            }
 
         }
         [HttpGet("transfer/{id}")]

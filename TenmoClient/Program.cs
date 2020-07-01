@@ -10,6 +10,7 @@ namespace TenmoClient
     {
         private static readonly ConsoleService consoleService = new ConsoleService();
         private static readonly AuthService authService = new AuthService();
+        private static decimal Id = UserService.GetUserId();
         
         static void Main(string[] args)
         {
@@ -88,12 +89,8 @@ namespace TenmoClient
                 }
                 else if (menuSelection == 1)
                 {
-                    //Account balance = authService.GetBalance();
-                    //if (balance != null)
-                    //{
-                    //    consoleService.PrintBalance(balance);
-                    //}
-
+                    decimal balance = authService.GetBalance(Id); 
+                    Console.WriteLine($"Your current account balance is {balance}");
                 }
                 else if (menuSelection == 2)
                 {
@@ -105,13 +102,13 @@ namespace TenmoClient
                 }
                 else if (menuSelection == 4)
                 {
-                    //print users to select recipiant
+                    //print users to select recipient
                     consoleService.DisplayUsers();
                     //select user
                     Console.WriteLine("Input the UserId of the person who you want to send TEBucks.");
                     //input amount (transfer contains (userIdFrom, userIdTo, amount) transfer type = 2
                     //verify amount < account balance
-                    //reciever balance increased by amount
+                    //receiver balance increased by amount
                     //sender balance decreased by amount
                     //transferStatus = Approved(2)
                 }
