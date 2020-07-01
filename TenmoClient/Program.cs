@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using TenmoClient.Data;
 using TenmoServer.DAO;
-
-
+using TenmoServer.Models;
 
 namespace TenmoClient
 {
@@ -11,6 +10,7 @@ namespace TenmoClient
     {
         private static readonly ConsoleService consoleService = new ConsoleService();
         private static readonly AuthService authService = new AuthService();
+        private static int Id = UserService.GetUserId();
         
         static void Main(string[] args)
         {
@@ -34,7 +34,7 @@ namespace TenmoClient
                 {
                     while (!UserService.IsLoggedIn()) //will keep looping until user is logged in
                     {
-                        LoginUser loginUser = consoleService.PromptForLogin();
+                        Data.LoginUser loginUser = consoleService.PromptForLogin();
                         API_User user = authService.Login(loginUser);
                         if (user != null)
                         {
@@ -47,7 +47,7 @@ namespace TenmoClient
                     bool isRegistered = false;
                     while (!isRegistered) //will keep looping until user is registered
                     {
-                        LoginUser registerUser = consoleService.PromptForLogin();
+                        Data.LoginUser registerUser = consoleService.PromptForLogin();
                         isRegistered = authService.Register(registerUser);
                         if (isRegistered)
                         {
@@ -89,11 +89,9 @@ namespace TenmoClient
                 }
                 else if (menuSelection == 1)
                 {
-                    //Account balance = authService.GetBalance();
-                    //if (balance != null)
-                    //{
-                    //    consoleService.PrintBalance(balance);
-                    //}
+                    Data.Account account = authService.GetAccount(Id);
+                    decimal balance = account.balance;
+                    Console.WriteLine($"Your current account balance is {balance}");
                 }
                 else if (menuSelection == 2)
                 {
@@ -105,11 +103,27 @@ namespace TenmoClient
                 }
                 else if (menuSelection == 4)
                 {
-
+                    //print users to select recipient
+                    consoleService.DisplayUsers();
+                    //select user
+                    Console.WriteLine("Input the UserId of the person who you want to send TEBucks.");
+                    //input amount (transfer contains (userIdFrom, userIdTo, amount) transfer type = 2
+                    //verify amount < account balance
+                    //receiver balance increased by amount
+                    //sender balance decreased by amount
+                    //transferStatus = Approved(2)
                 }
                 else if (menuSelection == 5)
                 {
-
+                    //print users to select user for request
+                    //select user
+                    //input amount requested (transfer contains (userIdFrom, userIdTo, amount) transfer type = 1
+                    //transferStatus = Pending(1)
+                    //userFrom approve/deny request
+                    //verify amount < userFrom account balance
+                    //reciever balance increased by amount
+                    //sender balance decreased by amount
+                    //TransferStatus changed to Approved or Rejected
                 }
                 else if (menuSelection == 6)
                 {
