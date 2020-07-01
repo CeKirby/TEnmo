@@ -89,11 +89,11 @@ namespace TenmoClient
                 }
                 else if (menuSelection == 1)
                 {
-                    Account balance = authService.GetBalance();
-                    if (balance != null)
-                    {
-                        consoleService.PrintBalance(balance);
-                    }
+                    //Account balance = authService.GetBalance();
+                    //if (balance != null)
+                    //{
+                    //    consoleService.PrintBalance(balance);
+                    //}
                 }
                 else if (menuSelection == 2)
                 {

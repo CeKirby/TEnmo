@@ -40,31 +40,33 @@ namespace TenmoServer.Controllers
         [HttpGet("user/account/{id}")]
         public ActionResult<Account> GetAccountById(int id)
         {
-            Account account = _accountDao.Get(id);
+            //Account account = _accountDao.Get(id);
 
-            if (account != null)
-            {
-                return account;
-            }
-            else
-            {
-                return NotFound();
-            }
+            //if (account != null)
+            //{
+            //    return account;
+            //}
+            //else
+            //{
+            //    return NotFound();
+            //}
+            return null;
 
         }
 
         [HttpGet("user/account/{id}")]
         public ActionResult<Account> GetAccountBalance(int id)
         {
-            Account account = _accountDAO.Get(id);
-            if (account != null)
-            {
-                return account;
-            }
-            else
-            {
-                return NotFound();
-            }
+            //Account account = _accountDAO.Get(id);
+            //if (account != null)
+            //{
+            //    return account;
+            //}
+            //else
+            //{
+            //    return NotFound();
+            //}
+            return null;
 
         }
         [HttpGet("transactions/{id}")]
