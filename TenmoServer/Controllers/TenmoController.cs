@@ -17,12 +17,9 @@ namespace TenmoServer.Controllers
     public class TenmoController : ControllerBase
 
     {
-        private static IUserDAO _userDAO;
-        private static ITransferDAO _transferDAO;
-        private static IAccountDAO _accountDAO;
-        public TenmoController()
-        {
-        }
+
+        private static IAccountDAO accountDAO;
+
 
         [HttpGet("users")]
         public List<User> ListUsers()
