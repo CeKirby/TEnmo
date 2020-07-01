@@ -17,6 +17,7 @@ namespace TenmoServer.Controllers
     {
         private static IUserDAO _userDAO;
         private static ITransferDAO _transferDAO;
+        private static IAccountDAO _accountDAO;
         public TenmoController()
         {
 

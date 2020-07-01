@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using TenmoClient.Data;
+using TenmoServer.DAO;
+
+
 
 namespace TenmoClient
 {
@@ -86,7 +89,7 @@ namespace TenmoClient
                 }
                 else if (menuSelection == 1)
                 {
-
+                    
                 }
                 else if (menuSelection == 2)
                 {
