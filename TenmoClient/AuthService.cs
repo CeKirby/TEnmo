@@ -9,7 +9,7 @@ namespace TenmoClient
     public class AuthService
     {
         private readonly static string API_BASE_URL = "https://localhost:44315/";
-        private readonly static string USER_URL = API_BASE_URL + "api/user";
+        private readonly static string USER_URL = API_BASE_URL + "api/user/";
         private readonly IRestClient client = new RestClient();
         
 
@@ -75,7 +75,7 @@ namespace TenmoClient
       
         public Account GetAccount(int id)
         {
-            RestRequest request = new RestRequest(USER_URL + "account/" + id);
+            RestRequest request = new RestRequest(USER_URL + $"account/{id}");
             IRestResponse<Account> response = client.Get<Account>(request);
 
             if (response.ResponseStatus != ResponseStatus.Completed || !response.IsSuccessful)
