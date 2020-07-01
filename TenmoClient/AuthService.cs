@@ -71,27 +71,8 @@ namespace TenmoClient
                 return response.Data;
             }
         }
-
-        //public Account GetBalance(int userId)
-        //{
-        //    RestRequest request = new RestRequest(API_BASE_URL + "account/" + accountId);
-        //    IRestResponse<Account> response = client.Get<Account>(request);
-
-        //    if (response.ResponseStatus != ResponseStatus.Completed || !response.IsSuccessful)
-        //    {
-        //        ProcessErrorResponse(response);
-        //    }
-        //    else
-        //    {
-        //        return response.Data;
-        //    }
-        //    return null;
-        //}
-    
-
-
       
-        public Account GetBalance(int id = 0)
+        public Account GetBalance(int id)
         {
             RestRequest request = new RestRequest(API_BASE_URL + "account" + id);
             IRestResponse<Account> response = client.Get<Account>(request);

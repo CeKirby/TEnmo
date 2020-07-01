@@ -75,6 +75,11 @@ namespace TenmoClient
             Console.WriteLine("");
             return pass;
         }
+
+        public List<API_User> DisplayUsers()
+        {
+            return null;
+        }
     }
 
 }
