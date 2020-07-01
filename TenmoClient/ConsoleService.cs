@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using TenmoClient.Data;
+using TenmoServer.DAO;
+
 
 namespace TenmoClient
 {
     public class ConsoleService
     {
+        
         /// <summary>
         /// Prompts for transfer ID to view, approve, or reject
         /// </summary>
@@ -28,7 +31,7 @@ namespace TenmoClient
         public void PrintBalance(Account balance)
         {
             {
-                Console.WriteLine("Your balance is" + balance);
+                Console.WriteLine("Your balance is: $" + balance.balance);
             }
         }
         public LoginUser PromptForLogin()
@@ -76,9 +79,15 @@ namespace TenmoClient
             return pass;
         }
 
-        public List<API_User> DisplayUsers()
+        public void DisplayUsers(List<API_User> users)
         {
-            return null;
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("  Users ID      ||  Name                    ");
+            Console.WriteLine("--------------------------------------------");
+            foreach (API_User user in users)
+            {
+                Console.WriteLine($"  {user.UserId}      ||  {user.Username}");
+            }
         }
     }
 

@@ -10,7 +10,7 @@ namespace TenmoClient
     {
         private static readonly ConsoleService consoleService = new ConsoleService();
         private static readonly AuthService authService = new AuthService();
-        private static int Id = UserService.GetUserId();
+        private static int LoggedInUserId = UserService.GetUserId();
         
         static void Main(string[] args)
         {
@@ -39,7 +39,7 @@ namespace TenmoClient
                         if (user != null)
                         {
                             UserService.SetLogin(user);
-                            Id = UserService.GetUserId();
+                            LoggedInUserId = UserService.GetUserId();
                         }
                     }
                 }
@@ -90,9 +90,9 @@ namespace TenmoClient
                 }
                 else if (menuSelection == 1)
                 {
-                    Data.Account account = authService.GetAccount(Id);
+                    Data.Account account = authService.GetAccount(LoggedInUserId);
                     decimal balance = account.balance;
-                    Console.WriteLine($"Your current account balance is {balance}");
+                    consoleService.PrintBalance(account);
                 }
                 else if (menuSelection == 2)
                 {
@@ -107,8 +107,10 @@ namespace TenmoClient
                     //print users to select recipient
                     consoleService.DisplayUsers();
                     //select user
-                    Console.WriteLine("Input the UserId of the person who you want to send TEBucks.");
+                    Console.WriteLine("Input the UserId of the person who you want to send TEBucks:");
+                    int userId = Convert.ToInt32(Console.ReadLine());
                     //input amount (transfer contains (userIdFrom, userIdTo, amount) transfer type = 2
+                    Console.WriteLine("Input the amount you want to send to {user.username}:");
                     //verify amount < account balance
                     //receiver balance increased by amount
                     //sender balance decreased by amount
