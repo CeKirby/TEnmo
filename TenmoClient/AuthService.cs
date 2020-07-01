@@ -72,7 +72,7 @@ namespace TenmoClient
             }
         }
       
-        public Account GetBalance(int id)
+        public Account GetBalance(decimal id)
         {
             RestRequest request = new RestRequest(API_BASE_URL + "account" + id);
             IRestResponse<Account> response = client.Get<Account>(request);
