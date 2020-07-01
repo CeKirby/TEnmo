@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using TenmoClient.Data;
+using TenmoServer.DAO;
+
+
 
 namespace TenmoClient
 {
@@ -86,11 +89,11 @@ namespace TenmoClient
                 }
                 else if (menuSelection == 1)
                 {
-                    Account balance = authService.GetBalance();
-                    if (balance != null)
-                    {
-                        consoleService.PrintBalance(balance);
-                    }
+                    //Account balance = authService.GetBalance();
+                    //if (balance != null)
+                    //{
+                    //    consoleService.PrintBalance(balance);
+                    //}
                 }
                 else if (menuSelection == 2)
                 {
