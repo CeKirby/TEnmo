@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TenmoServer.Models;
+using TenmoServer.DAO;
 
 namespace TenmoServer.Controllers
 {
@@ -19,8 +20,6 @@ namespace TenmoServer.Controllers
 
         private static IAccountDAO accountDAO;
 
-
-    
 
         [HttpGet("users")]
         public List<User> ListUsers()
@@ -38,31 +37,7 @@ namespace TenmoServer.Controllers
         [HttpGet("user/account/{id}")]
         public ActionResult<Account> GetAccountById(int id)
         {
-            Account account = accountDao.Get(id);
-
-            if (account != null)
-            {
-                return account;
-            }
-            else
-            {
-                return NotFound();
-            }
-
-        }
-
-        [HttpGet("user/account/{id}")]
-        public ActionResult<Account> GetAccountBalance(int id)
-        {
-            Account account = _accountDAO.Get(id);
-            if (account != null)
-            {
-                return account;
-            }
-            else
-            {
-                return NotFound();
-            }
+            return null;
 
         }
         [HttpGet("transactions/{id}")]

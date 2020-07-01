@@ -4,7 +4,11 @@ using System.Text;
 
 namespace TenmoClient.Data
 {
-    class Account
-    {
+
+        public class Account
+        {
+            public int account_id { get; set; }
+            public int user_id { get; set; }
+            public decimal balance { get; set; }
+        }
     }
-}
