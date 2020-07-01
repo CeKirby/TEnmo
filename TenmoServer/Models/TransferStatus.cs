@@ -8,8 +8,8 @@ namespace TenmoServer.Models
     public class TransferStatus
     {
         //Pending(1) Approved(2) Rejected(3)
-        public int transfer_status_id { get; set; }
+        public int TransferStatusId { get; set; }
 
-        public string transfer_status_desc { get; set; }
+        public string TransferStatusDesc { get; set; }
     }
 }
