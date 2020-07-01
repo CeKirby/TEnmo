@@ -12,52 +12,40 @@ namespace TenmoServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
 
-    public class TenmoController : ControllerBase
+
+    public class UserController : ControllerBase
 
     {
 
         private static IAccountDAO _accountDAO;
 
+        public UserController(IAccountDAO accountDAO)
+        {
+            _accountDAO = accountDAO;
+        }
 
-        [HttpGet("users")]
+        [HttpGet]
         public List<User> ListUsers()
         {
             return null;
         }
 
-        [HttpGet("user/{id}")]
+        [HttpGet("{id}")]
         public ActionResult<User> GetUser(int id)
         {
             return null;
 
         }
 
-        [HttpGet("user/account/{id}")]
+        [HttpGet("account/{id}")]
         public ActionResult<Account> GetAccountById(int id)
         {
-            //Account account = _accountDao.Get(id);
+            Account account = _accountDAO.GetAccount(id);
 
-            //if (account != null)
-            //{
-            //    return account;
-            //}
-            //else
-            //{
-            //    return NotFound();
-            //}
-            return null;
-
-        }
-
-        [HttpGet("user/account/{id}")]
-        public ActionResult<decimal> GetAccountBalance(int id)
-        {
-            decimal balance = _accountDAO.GetBalance(id);
-            if (balance > 0)
+            if (account != null)
             {
-                return balance;
+                return account;
             }
             else
             {
@@ -65,6 +53,21 @@ namespace TenmoServer.Controllers
             }
 
         }
+
+        //[HttpGet("account/{id}")]
+        //public ActionResult<decimal> GetAccountBalance(int id)
+        //{
+        //    decimal balance = _accountDAO.GetBalance(id);
+        //    if (balance > 0)
+        //    {
+        //        return balance;
+        //    }
+        //    else
+        //    {
+        //        return NotFound();
+        //    }
+
+        //}
         [HttpGet("transfer/{id}")]
         public ActionResult<User> GetTransactionsByUserId(int id)
         {
@@ -79,7 +82,7 @@ namespace TenmoServer.Controllers
 
         }
 
-        [HttpPut("transactions/{id}")]
+        [HttpPut("transfer/{id}")]
         public ActionResult<User> ApproveTransaction(int id)
         {
             return null;
