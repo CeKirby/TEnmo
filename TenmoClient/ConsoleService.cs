@@ -25,7 +25,12 @@ namespace TenmoClient
                 return actionId;
             }
         }
-
+        public void PrintBalance(Account balance)
+        {
+            {
+                Console.WriteLine("Your balance is" + balance);
+            }
+        }
         public LoginUser PromptForLogin()
         {
             Console.Write("Username: ");
@@ -71,4 +76,5 @@ namespace TenmoClient
             return pass;
         }
     }
+
 }
