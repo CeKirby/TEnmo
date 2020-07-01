@@ -10,7 +10,7 @@ namespace TenmoClient
     {
         private static readonly ConsoleService consoleService = new ConsoleService();
         private static readonly AuthService authService = new AuthService();
-        private static decimal Id = UserService.GetUserId();
+        private static int Id = UserService.GetUserId();
         
         static void Main(string[] args)
         {
@@ -89,7 +89,8 @@ namespace TenmoClient
                 }
                 else if (menuSelection == 1)
                 {
-                    decimal balance = authService.GetBalance(Id); 
+                    Data.Account account = authService.GetAccount(Id);
+                    decimal balance = account.balance;
                     Console.WriteLine($"Your current account balance is {balance}");
                 }
                 else if (menuSelection == 2)
