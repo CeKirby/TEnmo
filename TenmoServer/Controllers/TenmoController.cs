@@ -48,8 +48,8 @@ namespace TenmoServer.Controllers
 
         }
 
-        [HttpPost("transactions/new")]
-        public ActionResult<User> NewTransaction()
+        [HttpPost("transfer/new")]
+        public ActionResult<User> NewTransfer()
         {
             return null;
 
@@ -59,16 +59,21 @@ namespace TenmoServer.Controllers
         [HttpPut("transfer/{id}")]
         public ActionResult<Transfer> UpdateTransfer(int id, Transfer transferToUpdate, int updateCode)
         {
-            Transfer existingTransfer = 
-            if(transferToUpdate = 
-            if(updateCode == 2)
-            {
+            //Transfer existingTransfer = transferDAO.GetTransfer(id);
+            //if (existingTransfer == null)
+            //{
+            //    return NotFound("Transfer does not exist");
+            //}
+            //if(updateCode == 2)
+            //{
+            //Transfer result = transferDAO.GetTransfer(id);
+            //} else if(updateCode == 3)
+            //{
 
-            } else if (updateCode == 3)
-            {
-
-            }
-            return
+            //}
+            
+            //return Ok(result);
+            return null;
         }
 
 

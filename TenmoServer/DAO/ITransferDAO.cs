@@ -7,13 +7,13 @@ namespace TenmoServer.DAO
 {
     public interface ITransferDAO
     {
-        int SendTransfer();
+        int SendTransfer(int userIdFrom, int UserIdTo);
 
-        bool ApproveTransfer();
+        bool ApproveTransfer(int transferId);
 
-        bool RejectTransfer();
+        bool RejectTransfer(int transferId);
 
-        string GetTransferStatus(int statusId);
+        string GetTransferStatus(int transferId);
 
     }
 }
