@@ -10,7 +10,7 @@ namespace TenmoServer.DAO
     public class TransferSqlDAO : ITransferDAO
     {
         private readonly string connectionString;
-        //Transfer transfer = new Transfer();
+
         public TransferSqlDAO(string dbConnectionString)
         {
             connectionString = dbConnectionString;

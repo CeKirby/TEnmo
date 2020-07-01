@@ -65,15 +65,15 @@ namespace TenmoServer.Controllers
             }
 
         }
-        [HttpGet("transactions/{id}")]
+        [HttpGet("transfer/{id}")]
         public ActionResult<User> GetTransactionsByUserId(int id)
         {
             return null;
 
         }
 
-        [HttpPost("transactions/new")]
-        public ActionResult<User> NewTransaction()
+        [HttpPost("transfer/new")]
+        public ActionResult<User> NewTransfer()
         {
             return null;
 
@@ -84,7 +84,6 @@ namespace TenmoServer.Controllers
         {
             return null;
         }
-
 
 
     }
