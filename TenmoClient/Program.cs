@@ -39,6 +39,7 @@ namespace TenmoClient
                         if (user != null)
                         {
                             UserService.SetLogin(user);
+                            Id = UserService.GetUserId();
                         }
                     }
                 }
