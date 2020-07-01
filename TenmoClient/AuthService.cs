@@ -3,12 +3,14 @@ using RestSharp.Authenticators;
 using System;
 using TenmoClient.Data;
 
+
 namespace TenmoClient
 {
     public class AuthService
     {
         private readonly static string API_BASE_URL = "https://localhost:44315/";
         private readonly IRestClient client = new RestClient();
+        
 
         //login endpoints
         public bool Register(LoginUser registerUser)
@@ -69,7 +71,47 @@ namespace TenmoClient
                 return response.Data;
             }
         }
+
+      
+        public Account GetHotels(int id)
+        {
+            RestRequest request = new RestRequest(API_BASE_URL + "account" + id);
+            IRestResponse<Account> response = client.Get<Account>(request);
+
+            if (response.ResponseStatus != ResponseStatus.Completed || !response.IsSuccessful)
+            {
+                ProcessErrorResponse(response);
+            }
+            else
+            {
+                return response.Data;
+            }
+            return null;
+        }
+
+
+        private void ProcessErrorResponse(IRestResponse response)
+        {
+            if (response.ResponseStatus != ResponseStatus.Completed)
+            {
+                Console.WriteLine("Error occurred - unable to reach server.");
+            }
+            else if (!response.IsSuccessful)
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    Console.WriteLine("You are unauthorized for this resource, please log in.");
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                {
+                    Console.WriteLine("You do not have permission to do this. Please contact system admin.");
+                }
+                else
+                {
+                    Console.WriteLine("Error occurred - received non-success response: " + (int)response.StatusCode);
+
+                }
+            }
+        }
     }
 }
-
-

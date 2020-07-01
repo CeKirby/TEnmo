@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TenmoServer.DAO;
 using TenmoServer.Models;
 
 namespace TenmoServer.Controllers
@@ -13,14 +12,15 @@ namespace TenmoServer.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class TenmoController : ControllerBase
-    {
-        private static IUserDAO _userDAO;
-        private static ITransferDAO _transferDAO;
-        public TenmoController()
-        {
 
-        }
+    public class TenmoController : ControllerBase
+
+    {
+
+        private static IAccountDAO accountDAO;
+
+
+    
 
         [HttpGet("users")]
         public List<User> ListUsers()
@@ -36,9 +36,18 @@ namespace TenmoServer.Controllers
         }
 
         [HttpGet("user/account/{id}")]
-        public ActionResult<User> GetAccountById(int id)
+        public ActionResult<Account> GetAccountById(int id)
         {
-            return null;
+            Account account = accountDao.Get(id);
+
+            if (account != null)
+            {
+                return account;
+            }
+            else
+            {
+                return NotFound();
+            }
 
         }
 
@@ -63,33 +72,19 @@ namespace TenmoServer.Controllers
 
         }
 
-        [HttpPost("transfer/new")]
-        public ActionResult<User> NewTransfer()
+        [HttpPost("transactions/new")]
+        public ActionResult<User> NewTransaction()
         {
             return null;
 
         }
 
-
-        [HttpPut("transfer/{id}")]
-        public ActionResult<Transfer> UpdateTransfer(int id, Transfer transferToUpdate, int updateCode)
+        [HttpPut("transactions/{id}")]
+        public ActionResult<User> ApproveTransaction(int id)
         {
-            //Transfer existingTransfer = transferDAO.GetTransfer(id);
-            //if (existingTransfer == null)
-            //{
-            //    return NotFound("Transfer does not exist");
-            //}
-            //if(updateCode == 2)
-            //{
-            //Transfer result = transferDAO.GetTransfer(id);
-            //} else if(updateCode == 3)
-            //{
-
-            //}
-            
-            //return Ok(result);
             return null;
         }
+
 
 
     }
