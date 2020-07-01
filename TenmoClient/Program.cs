@@ -11,7 +11,7 @@ namespace TenmoClient
     {
         private static readonly ConsoleService consoleService = new ConsoleService();
         private static readonly AuthService authService = new AuthService();
-
+        
         static void Main(string[] args)
         {
             Run();
@@ -89,7 +89,11 @@ namespace TenmoClient
                 }
                 else if (menuSelection == 1)
                 {
-                    
+                    Account balance = authService.GetBalance();
+                    if (balance != null)
+                    {
+                        consoleService.PrintBalance(balance);
+                    }
                 }
                 else if (menuSelection == 2)
                 {

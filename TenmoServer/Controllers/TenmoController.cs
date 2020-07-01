@@ -5,22 +5,23 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TenmoServer.DAO;
 using TenmoServer.Models;
+using TenmoServer.DAO;
 
 namespace TenmoServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+
     public class TenmoController : ControllerBase
+
     {
         private static IUserDAO _userDAO;
         private static ITransferDAO _transferDAO;
         private static IAccountDAO _accountDAO;
         public TenmoController()
         {
-
         }
 
         [HttpGet("users")]
@@ -37,9 +38,18 @@ namespace TenmoServer.Controllers
         }
 
         [HttpGet("user/account/{id}")]
-        public ActionResult<User> GetAccountById(int id)
+        public ActionResult<Account> GetAccountById(int id)
         {
-            return null;
+            Account account = _accountDao.Get(id);
+
+            if (account != null)
+            {
+                return account;
+            }
+            else
+            {
+                return NotFound();
+            }
 
         }
 
@@ -64,33 +74,19 @@ namespace TenmoServer.Controllers
 
         }
 
-        [HttpPost("transfer/new")]
-        public ActionResult<User> NewTransfer()
+        [HttpPost("transactions/new")]
+        public ActionResult<User> NewTransaction()
         {
             return null;
 
         }
 
-
-        [HttpPut("transfer/{id}")]
-        public ActionResult<Transfer> UpdateTransfer(int id, Transfer transferToUpdate, int updateCode)
+        [HttpPut("transactions/{id}")]
+        public ActionResult<User> ApproveTransaction(int id)
         {
-            //Transfer existingTransfer = transferDAO.GetTransfer(id);
-            //if (existingTransfer == null)
-            //{
-            //    return NotFound("Transfer does not exist");
-            //}
-            //if(updateCode == 2)
-            //{
-            //Transfer result = transferDAO.GetTransfer(id);
-            //} else if(updateCode == 3)
-            //{
-
-            //}
-            
-            //return Ok(result);
             return null;
         }
+
 
 
     }
