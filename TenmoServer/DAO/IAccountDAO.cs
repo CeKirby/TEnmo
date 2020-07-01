@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace TenmoServer.DAO
 {
-    interface IAccountDAO
+    public interface IAccountDAO
     {
+        decimal GetBalance(int account_id);
     }
 }
