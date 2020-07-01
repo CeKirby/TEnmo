@@ -20,11 +20,12 @@ namespace TenmoServer.Controllers
 
         private static IAccountDAO _accountDAO;
 
-        public UserController(IAccountDAO accountDAO)
-        {
-            _accountDAO = accountDAO;
-        }
-
+   
+            public UserController(IAccountDAO accountDAO)
+            {
+                _accountDAO = accountDAO;
+            }
+        
         [HttpGet]
         public List<User> ListUsers()
         {

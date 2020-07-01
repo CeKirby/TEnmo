@@ -11,7 +11,7 @@ namespace TenmoClient
         private static readonly ConsoleService consoleService = new ConsoleService();
         private static readonly AuthService authService = new AuthService();
         private static int Id = UserService.GetUserId();
-        
+
         static void Main(string[] args)
         {
             Run();
@@ -39,6 +39,7 @@ namespace TenmoClient
                         if (user != null)
                         {
                             UserService.SetLogin(user);
+                            Id = UserService.GetUserId();
                         }
                     }
                 }
