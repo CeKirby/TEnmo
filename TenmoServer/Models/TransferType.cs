@@ -8,8 +8,8 @@ namespace TenmoServer.Models
     public class TransferType
     {
         // request(1) or send(2)
-        public int transfer_type_id { get; set; }
+        public int TransferTypeId { get; set; }
 
-        public string transfer_type_desc { get; set; }
+        public string TransferTypeDesc { get; set; }
     }
 }
