@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TenmoClient.Data;
-using TenmoServer.DAO;
+
 
 
 namespace TenmoClient
@@ -90,6 +90,28 @@ namespace TenmoClient
             }
         }
 
+        public bool VerifyAccountBalancePrompt(decimal userBalance, int amount, string usernameTo)
+        {
+            bool balanceVerified = false;
+            while (userBalance < amount)
+            {
+                Console.WriteLine("You do not have enough TEBucks in your account to make this transfer.");
+                Console.WriteLine("Change amount (1) or return to the Main Menu(0)?");
+                int response = Convert.ToInt32(Console.ReadLine());
+                if (response == 1)
+                {
+                    Console.WriteLine($"Input the amount you want to send to {usernameTo}:");
+                    amount = Convert.ToInt32(Console.ReadLine());
+                }
+                else if (response == 0)
+                {
+                    return balanceVerified;
+                }
+            }
+            balanceVerified = true;
+            return balanceVerified;
+        }
+    
         public void DisplayTransfer()
         {
 

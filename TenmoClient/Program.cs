@@ -122,27 +122,26 @@ namespace TenmoClient
                         int amount = Convert.ToInt32(Console.ReadLine());
 
                         //verify amount < account balance
-                        while (userBalance < amount)
-                        {
-                            Console.WriteLine("You do not have enough TEBucks in your account to make this transfer.");
-                            Console.WriteLine("Change amount (1) or return to the Main Menu(0)?");
-                            int response = Convert.ToInt32(Console.ReadLine());
-                            if (response == 1)
-                            {
-                                Console.WriteLine($"Input the amount you want to send to {usernameTo}:");
-                                amount = Convert.ToInt32(Console.ReadLine());
-                            }
-                            else if (response == 0)
-                            {
-                                Run();
-                            }
-                        }
+                        consoleService.VerifyAccountBalancePrompt(userBalance, amount, usernameTo);
                     }
                     catch (Exception e)
                     {
                         Console.WriteLine("You entered an invalid Response. Please try again.");
                     }
+                    consoleService.DisplayTransfer();
                     //Confirm transfer is still wanted
+                    Console.WriteLine("Confirm Transfer? Y/N");
+                    string response = Console.ReadLine().ToLower();
+                    if (response == "y")
+                    {
+
+                    } else
+                    {
+                        //TODO FIX
+
+
+                    }
+
                     //create transfer (transfer contains (userIdFrom, userIdTo, amount, transfer type = 2)
                     //receiver balance increased by amount
                     //sender balance decreased by amount
