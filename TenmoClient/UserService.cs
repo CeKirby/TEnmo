@@ -1,4 +1,5 @@
 ﻿using TenmoClient.Data;
+using TenmoServer.Models;
 
 namespace TenmoClient
 {
@@ -14,6 +15,11 @@ namespace TenmoClient
         public static int GetUserId()
         {
             return user.UserId;
+        }
+
+        public static string GetUsername()
+        {
+            return user.Username;
         }
 
         public static bool IsLoggedIn()

@@ -10,8 +10,10 @@ namespace TenmoClient
     {
         private static readonly ConsoleService consoleService = new ConsoleService();
         private static readonly AuthService authService = new AuthService();
-        private static int Id = UserService.GetUserId();
-        
+        private static int loggedInUserId = UserService.GetUserId();
+        private static decimal userBalance;
+
+
         static void Main(string[] args)
         {
             Run();
@@ -39,7 +41,7 @@ namespace TenmoClient
                         if (user != null)
                         {
                             UserService.SetLogin(user);
-                            Id = UserService.GetUserId();
+                            loggedInUserId = UserService.GetUserId();
                         }
                     }
                 }
@@ -90,9 +92,9 @@ namespace TenmoClient
                 }
                 else if (menuSelection == 1)
                 {
-                    Data.Account account = authService.GetAccount(Id);
-                    decimal balance = account.balance;
-                    Console.WriteLine($"Your current account balance is {balance}");
+                    Data.Account account = authService.GetAccount(loggedInUserId);
+                    userBalance = account.balance;
+                    consoleService.PrintBalance(account);
                 }
                 else if (menuSelection == 2)
                 {
@@ -104,15 +106,52 @@ namespace TenmoClient
                 }
                 else if (menuSelection == 4)
                 {
-                    //print users to select recipient
-                    consoleService.DisplayUsers();
-                    //select user
-                    Console.WriteLine("Input the UserId of the person who you want to send TEBucks.");
-                    //input amount (transfer contains (userIdFrom, userIdTo, amount) transfer type = 2
-                    //verify amount < account balance
-                    //receiver balance increased by amount
-                    //sender balance decreased by amount
-                    //transferStatus = Approved(2)
+                    try
+                    {
+                        //print users to select recipient
+                        List<API_User> users = authService.GetUsers();
+                        consoleService.DisplayUsers(users);
+
+                        //select user
+                        Console.WriteLine("Input the UserId of the person who you want to send TEBucks:");
+                        int userId = Convert.ToInt32(Console.ReadLine());
+                        API_User userTo = authService.GetUser(userId);
+
+                        //input amount 
+                        Console.WriteLine($"Input the amount you want to send to {userTo.Username}:");
+                        decimal amount = Convert.ToDecimal(Console.ReadLine());
+
+                        //verify amount < account balance
+                        amount = consoleService.VerifyAccountBalancePrompt(userBalance, amount, userTo.Username);
+                        if (amount < 0)
+                        {
+                            MenuSelection();
+                        }
+                        consoleService.DisplayTransfer(amount, userTo.Username);
+                        //Confirm transfer is still wanted
+                        Console.WriteLine("Confirm Transfer? Y/N");
+                        string response = Console.ReadLine().ToLower();
+                        if (response != "y")
+                        {
+                            //TODO FIX
+                            MenuSelection();
+                        }
+                        else
+                        {
+
+
+
+                        }
+
+                        //create transfer (transfer contains (userIdFrom, userIdTo, amount, transfer type = 2)
+                        //receiver balance increased by amount
+                        //sender balance decreased by amount
+                        //transferStatus = Approved(2)
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("You entered an invalid Response. Please try again.");
+                    }
                 }
                 else if (menuSelection == 5)
                 {
