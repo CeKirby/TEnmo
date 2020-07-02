@@ -122,7 +122,7 @@ namespace TenmoClient
             return null;
         }
 
-        public Transfer GetTransfers(int id)
+        public Transfer GetTransferDetails(int id)
         {
             RestRequest request = new RestRequest(USER_URL + $"transfer/{id}");
             IRestResponse<Transfer> response = client.Get<Transfer>(request);
@@ -133,7 +133,6 @@ namespace TenmoClient
             }
             else
             {
-
                 return response.Data;
             }
             return null;
