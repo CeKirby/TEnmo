@@ -60,10 +60,10 @@ namespace TenmoServer.Controllers
 
         }
 
-        [HttpGet]
-        public List<Transfer> GetPastTransations()
+        [HttpGet("transfer/")]
+        public List<Transfer> GetPastTransations(Transfer transfer)
         {
-            return transferDAO.GetPastTransfers();
+            return transferDAO.GetPastTransfers(transfer);
 
         }
 
