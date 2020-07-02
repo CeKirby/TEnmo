@@ -8,7 +8,7 @@ namespace TenmoClient
 {
     public class ConsoleService
     {
-        
+
         /// <summary>
         /// Prompts for transfer ID to view, approve, or reject
         /// </summary>
@@ -108,10 +108,10 @@ namespace TenmoClient
                     amount = -1;
                 }
             }
-            
+
             return amount;
         }
-    
+
         public void DisplayTransfer(decimal amount, string userToUsername)
         {
             string date = DateTime.Today.ToString("dd/MM/yyyy");
@@ -120,10 +120,19 @@ namespace TenmoClient
             Console.WriteLine("--------------------------------------------");
         }
 
-        public void DisplayAllUserTransfers(API_User user)
-        {
+        //    public void DisplayAllUserTransfers(API_User user)
+        //    {
 
+        //    }
+        //}
+        public void PrintTransfers(List<Transfer> transfers)
+        {
+            Console.WriteLine("--------------------------------------------");
+            foreach (Transfer transfer in transfers)
+            {
+                Console.WriteLine(transfer.TransferId + transfer.AccountTo + transfer.AccountFrom + transfer.Amount);
+            }
         }
     }
-
 }
+

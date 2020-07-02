@@ -98,18 +98,29 @@ namespace TenmoClient
                 }
                 else if (menuSelection == 2)
                 {
+                    List<Data.Transfer> pastTransfers = authService.GetPastTransactions();
+                    if (pastTransfers != null && pastTransfers.Count > 0)
+                    {
+                        consoleService.PrintTransfers(pastTransfers);
+                    }
+                    Console.WriteLine("Please enter a transfer ID to view details(0 to cancel):");
+                    int userId = Convert.ToInt32(Console.ReadLine());
+
+                    if (userId == loggedInUserId)
+                    {
                         Data.Transfer transfers = authService.GetTransferDetails(loggedInUserId);
                         if (transfers != null)
                         {
-                        Console.WriteLine(" Id: " + transfers.TransferId);
-                        Console.WriteLine(" Type Id: " + transfers.TransferTypeId);
-                        Console.WriteLine(" Status Id: " + transfers.TransferStatusId);
-                        Console.WriteLine(" Account From: " + transfers.AccountFrom);
-                        Console.WriteLine(" Account To: " + transfers.AccountTo);
-                        Console.WriteLine(" Amount: " + transfers.Amount);
+                            Console.WriteLine(" Id: " + transfers.TransferId);
+                            Console.WriteLine(" Type Id: " + transfers.TransferTypeId);
+                            Console.WriteLine(" Status Id: " + transfers.TransferStatusId);
+                            Console.WriteLine(" Account From: " + transfers.AccountFrom);
+                            Console.WriteLine(" Account To: " + transfers.AccountTo);
+                            Console.WriteLine(" Amount: " + transfers.Amount);
+                        }
                     }
-                    
                 }
+
                 else if (menuSelection == 3)
                 {
 
@@ -155,7 +166,7 @@ namespace TenmoClient
 
                         }
 
-                        
+
                         //receiver balance increased by amount
                         //sender balance decreased by amount
                         //transferStatus = Approved(2)
@@ -188,7 +199,7 @@ namespace TenmoClient
                     Console.WriteLine("Goodbye!");
                     Environment.Exit(0);
                 }
+                }
             }
         }
     }
-}

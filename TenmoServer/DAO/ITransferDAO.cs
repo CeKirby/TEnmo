@@ -17,5 +17,7 @@ namespace TenmoServer.DAO
         string GetTransferStatus(int transferId);
 
         Transfer GetTransfer(int transferId);
+
+        List<Transfer> GetPastTransfers();
     }
 }
