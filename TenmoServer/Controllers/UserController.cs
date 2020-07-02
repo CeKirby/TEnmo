@@ -60,6 +60,12 @@ namespace TenmoServer.Controllers
 
         }
 
+        [HttpGet]
+        public List<Transfer> GetPastTransations()
+        {
+            return transferDAO.GetPastTransfers();
+
+        }
 
         [HttpGet("transfer/{id}")]
         public ActionResult<Transfer> GetTransferDetails(int id)

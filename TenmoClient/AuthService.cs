@@ -123,6 +123,22 @@ namespace TenmoClient
             return null;
         }
 
+        public List<Transfer> GetPastTransactions()
+        {
+            RestRequest request = new RestRequest(USER_URL);
+            IRestResponse<List<Transfer>> response = client.Get<List<Transfer>>(request);
+
+            if (response.ResponseStatus != ResponseStatus.Completed || !response.IsSuccessful)
+            {
+                ProcessErrorResponse(response);
+            }
+            else
+            {
+                return response.Data;
+            }
+
+            return null;
+        }
         public Transfer GetTransferDetails(int id)
         {
             RestRequest request = new RestRequest(USER_URL + $"transfer/{id}");
