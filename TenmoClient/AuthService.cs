@@ -158,6 +158,24 @@ namespace TenmoClient
             return null;
         }
 
+        public Account UpdateAccount(int userId, Account updatedAccount)
+        {
+            RestRequest request = new RestRequest(USER_URL + "account/{userId}");
+            request.AddJsonBody(updatedAccount);
+            IRestResponse<Account> response = client.Put<Account>(request);
+
+            if (response.ResponseStatus != ResponseStatus.Completed || !response.IsSuccessful)
+            {
+                ProcessErrorResponse(response);
+            }
+            else
+            {
+                return response.Data;
+            }
+
+            return null;
+        }
+
         private void ProcessErrorResponse(IRestResponse response)
         {
             if (response.ResponseStatus != ResponseStatus.Completed)
