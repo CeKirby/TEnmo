@@ -88,11 +88,11 @@ namespace TenmoServer.Controllers
 
         }
 
-        [HttpPost("transfer/new")]
+        [HttpPost("transfer")]
         public ActionResult<Transfer> NewTransfer(Transfer transfer)
         {
             Transfer added = transferDAO.CreateTransfer(transfer);
-            return Created($"/reservations/{added.TransferId}", added);
+            return Created($"transfer/{added.TransferId}", added);
 
         }
 
