@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using TenmoClient.Data;
 
+
+
 namespace TenmoClient
 {
     public class ConsoleService
     {
+        
         /// <summary>
         /// Prompts for transfer ID to view, approve, or reject
         /// </summary>
@@ -28,7 +31,7 @@ namespace TenmoClient
         public void PrintBalance(Account balance)
         {
             {
-                Console.WriteLine("Your balance is" + balance);
+                Console.WriteLine("Your balance is: $" + balance.balance);
             }
         }
         public LoginUser PromptForLogin()
@@ -76,9 +79,47 @@ namespace TenmoClient
             return pass;
         }
 
-        public List<API_User> DisplayUsers()
+        public void DisplayUsers(List<API_User> users)
         {
-            return null;
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("  Users ID      ||  Name                    ");
+            Console.WriteLine("--------------------------------------------");
+            foreach (API_User user in users)
+            {
+                Console.WriteLine($"  {user.UserId}      ||  {user.Username}");
+            }
+        }
+
+        public decimal VerifyAccountBalancePrompt(decimal userBalance, decimal amountToSend, string usernameTo)
+        {
+            decimal amount = amountToSend;
+            while (userBalance < amount)
+            {
+                Console.WriteLine("You do not have enough TEBucks in your account to make this transfer.");
+                Console.WriteLine("Change amount (1) or return to the Main Menu(0)?");
+                int response = Convert.ToInt32(Console.ReadLine());
+                if (response == 1)
+                {
+                    Console.WriteLine($"Input the amount you want to send to {usernameTo}:");
+                    amount = Convert.ToInt32(Console.ReadLine());
+                }
+                else if (response == 0)
+                {
+                    amount = -1;
+                }
+            }
+            
+            return amount;
+        }
+    
+        public void DisplayTransfer(decimal amount, string userToUsername)
+        {
+
+        }
+
+        public void DisplayAllUserTransfers(API_User user)
+        {
+
         }
     }
 

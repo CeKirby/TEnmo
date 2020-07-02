@@ -18,9 +18,16 @@ namespace TenmoServer.Controllers
 
     {
 
-        private static IAccountDAO _accountDAO;
-        private static ITransferDAO _transferDAO;
+        private static IAccountDAO accountDAO;
+        private static IUserDAO userDAO;
+        private static ITransferDAO transferDAO;
 
+        public UserController(IAccountDAO _accountDAO, IUserDAO _userDAO, ITransferDAO _transferDAO)
+        {
+            accountDAO = _accountDAO;
+            userDAO = _userDAO;
+            transferDAO = _transferDAO;
+        }
 
         public UserController(IAccountDAO accountDAO, ITransferDAO transferDAO)
             {
@@ -32,20 +39,21 @@ namespace TenmoServer.Controllers
         [HttpGet]
         public List<User> ListUsers()
         {
-            return null;
+            return userDAO.GetUsers();
         }
 
         [HttpGet("{id}")]
         public ActionResult<User> GetUser(int id)
         {
-            return null;
+
+            return userDAO.GetUserById(id);
 
         }
 
         [HttpGet("account/{id}")]
         public ActionResult<Account> GetAccountById(int id)
         {
-            Account account = _accountDAO.GetAccount(id);
+            Account account = accountDAO.GetAccount(id);
 
             if (account != null)
             {
