@@ -12,7 +12,7 @@ namespace TenmoClient
         private readonly static string API_BASE_URL = "https://localhost:44315/";
         private readonly static string USER_URL = API_BASE_URL + "api/user/";
         private readonly IRestClient client = new RestClient();
-        
+    
 
         //login endpoints
         public bool Register(LoginUser registerUser)
@@ -73,8 +73,9 @@ namespace TenmoClient
                 return response.Data;
             }
         }
-      
+ 
         public Account GetAccount(int userId)
+
         {
             RestRequest request = new RestRequest(USER_URL + $"account/{userId}");
             IRestResponse<Account> response = client.Get<Account>(request);
@@ -119,6 +120,23 @@ namespace TenmoClient
             {
                 return response.Data;
             }
+            return null;
+        }
+
+        public Transfer GetTransferDetails(int id)
+        {
+            RestRequest request = new RestRequest(USER_URL + $"transfer/{id}");
+            IRestResponse<Transfer> response = client.Get<Transfer>(request);
+
+            if (response.ResponseStatus != ResponseStatus.Completed || !response.IsSuccessful)
+            {
+                ProcessErrorResponse(response);
+            }
+            else
+            {
+                return response.Data;
+            }
+
             return null;
         }
 

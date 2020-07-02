@@ -29,6 +29,7 @@ namespace TenmoServer.Controllers
             transferDAO = _transferDAO;
         }
 
+        
         [HttpGet]
         public List<User> ListUsers()
         {
@@ -59,20 +60,21 @@ namespace TenmoServer.Controllers
 
         }
 
-        //[HttpGet("account/{id}")]
-        //public ActionResult<decimal> GetAccountBalance(int id)
-        //{
-        //    decimal balance = _accountDAO.GetBalance(id);
-        //    if (balance > 0)
-        //    {
-        //        return balance;
-        //    }
-        //    else
-        //    {
-        //        return NotFound();
-        //    }
 
-        //}
+        [HttpGet("transfer/{id}")]
+        public ActionResult<Transfer> GetTransferDetails(int id)
+        {
+            
+                Transfer transfer = transferDAO.GetTransfer(id);
+                if (transfer != null)
+                {
+                return transfer;
+                }
+                return NotFound();
+            
+
+        }
+
         [HttpGet("transfer/{id}")]
         public ActionResult<User> GetTransfersByUserId(int id)
         {

@@ -32,7 +32,7 @@ namespace TenmoServer.DAO
                     if (reader.HasRows && reader.Read())
                     {
 
-                       account = GetAccountFromReader(reader);
+                        account = GetAccountFromReader(reader);
                     }
                 }
             }
@@ -57,10 +57,10 @@ namespace TenmoServer.DAO
                     cmd.Parameters.AddWithValue("@account_id", accountId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
-                    if (reader.HasRows && reader.Read()) 
-                        
+                    if (reader.HasRows && reader.Read())
+
                     {
-                        
+
                         account = GetAccountFromReader(reader);
                         returnBalance = account.balance;
                     }
@@ -80,7 +80,7 @@ namespace TenmoServer.DAO
                 account_id = Convert.ToInt32(reader["account_id"]),
                 user_id = Convert.ToInt32(reader["user_id"]),
                 balance = Convert.ToDecimal(reader["balance"]),
-               
+
             };
 
             return account;

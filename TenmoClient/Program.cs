@@ -98,7 +98,17 @@ namespace TenmoClient
                 }
                 else if (menuSelection == 2)
                 {
-
+                        Data.Transfer transfers = authService.GetTransferDetails(loggedInUserId);
+                        if (transfers != null)
+                        {
+                        Console.WriteLine(" Id: " + transfers.TransferId);
+                        Console.WriteLine(" Type Id: " + transfers.TransferTypeId);
+                        Console.WriteLine(" Status Id: " + transfers.TransferStatusId);
+                        Console.WriteLine(" Account From: " + transfers.AccountFrom);
+                        Console.WriteLine(" Account To: " + transfers.AccountTo);
+                        Console.WriteLine(" Amount: " + transfers.Amount);
+                    }
+                    
                 }
                 else if (menuSelection == 3)
                 {
