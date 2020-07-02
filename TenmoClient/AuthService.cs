@@ -123,9 +123,9 @@ namespace TenmoClient
             return null;
         }
 
-        public List<Transfer> GetPastTransactions(Transfer transfer)
+        public List<Transfer> GetPastTransfers(int accountId)
         {
-            RestRequest request = new RestRequest(USER_URL + "transfer");
+            RestRequest request = new RestRequest(USER_URL + $"transfer/history/{accountId}");
             IRestResponse<List<Transfer>> response = client.Get<List<Transfer>>(request);
 
             if (response.ResponseStatus != ResponseStatus.Completed || !response.IsSuccessful)
@@ -161,6 +161,24 @@ namespace TenmoClient
             RestRequest request = new RestRequest(USER_URL + "transfer");
             request.AddJsonBody(transfer);
             IRestResponse<Transfer> response = client.Post<Transfer>(request);
+
+            if (response.ResponseStatus != ResponseStatus.Completed || !response.IsSuccessful)
+            {
+                ProcessErrorResponse(response);
+            }
+            else
+            {
+                return response.Data;
+            }
+
+            return null;
+        }
+
+        public Account UpdateAccount(int userId, Account updatedAccount)
+        {
+            RestRequest request = new RestRequest(USER_URL + "account/{userId}");
+            request.AddJsonBody(updatedAccount);
+            IRestResponse<Account> response = client.Put<Account>(request);
 
             if (response.ResponseStatus != ResponseStatus.Completed || !response.IsSuccessful)
             {

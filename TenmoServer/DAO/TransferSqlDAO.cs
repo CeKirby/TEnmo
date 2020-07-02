@@ -47,7 +47,7 @@ namespace TenmoServer.DAO
                 throw;
             }
         }
-        public List<Transfer> GetPastTransfers(Transfer transfer)
+        public List<Transfer> GetPastTransfers(int accountId)
         {
             List<Transfer> pastTransfers = new List<Transfer>();
             try
@@ -56,7 +56,8 @@ namespace TenmoServer.DAO
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT * FROM transfer WHERE transfer_id = @transferid", conn);
+                    SqlCommand cmd = new SqlCommand("select * from transfers where account_from = @accountId or account_to = @accountId", conn);
+                    cmd.Parameters.AddWithValue("@accountId", accountId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     if (reader.HasRows && reader.Read())
@@ -65,7 +66,7 @@ namespace TenmoServer.DAO
                             while (reader.Read())
                             {
                                 Transfer t = GetTransferFromReader(reader);
-                            pastTransfers.Add(t);
+                                pastTransfers.Add(t);
                             }
 
                         }

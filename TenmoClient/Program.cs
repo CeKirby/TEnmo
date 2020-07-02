@@ -11,6 +11,7 @@ namespace TenmoClient
         private static readonly ConsoleService consoleService = new ConsoleService();
         private static readonly AuthService authService = new AuthService();
         private static int loggedInUserId = UserService.GetUserId();
+        private static Data.Account loggedInAccount = authService.GetAccount(loggedInUserId);
         private static decimal userBalance;
 
 
@@ -92,13 +93,14 @@ namespace TenmoClient
                 }
                 else if (menuSelection == 1)
                 {
-                    Data.Account account = authService.GetAccount(loggedInUserId);
-                    userBalance = account.balance;
-                    consoleService.PrintBalance(account);
+                    loggedInAccount = authService.GetAccount(loggedInUserId);
+                    userBalance = loggedInAccount.balance;
+                    consoleService.PrintBalance(loggedInAccount);
                 }
                 else if (menuSelection == 2)
                 {
-                    List<Data.Transfer> pastTransfers = authService.GetPastTransactions();
+                    loggedInAccount = authService.GetAccount(loggedInUserId);
+                    List<Data.Transfer> pastTransfers = authService.GetPastTransfers(loggedInAccount.accountId);
                     if (pastTransfers != null && pastTransfers.Count > 0)
                     {
                         consoleService.PrintTransfers(pastTransfers);
