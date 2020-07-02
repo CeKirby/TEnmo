@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TenmoServer.Models;
 
 namespace TenmoServer.DAO
 {
     public interface ITransferDAO
     {
-        int SendTransfer(int userIdFrom, int UserIdTo);
+        Transfer CreateTransfer(Transfer transfer);
 
         bool ApproveTransfer(int transferId);
 

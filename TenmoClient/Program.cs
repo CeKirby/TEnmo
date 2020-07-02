@@ -138,12 +138,14 @@ namespace TenmoClient
                         }
                         else
                         {
-
-
+                            //create transfer (transfer contains (userIdFrom, userIdTo, amount, transfer type = 2)
+                            Data.Account accountFrom = authService.GetAccount(loggedInUserId);
+                            Data.Account accountTo = authService.GetAccount(userTo.UserId);
+                            Data.Transfer newTransfer = new Data.Transfer(2, 2, accountFrom.accountId, accountTo.accountId, amount);
 
                         }
 
-                        //create transfer (transfer contains (userIdFrom, userIdTo, amount, transfer type = 2)
+                        
                         //receiver balance increased by amount
                         //sender balance decreased by amount
                         //transferStatus = Approved(2)
