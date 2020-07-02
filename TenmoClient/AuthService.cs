@@ -142,9 +142,9 @@ namespace TenmoClient
 
         public Transfer CreateTransfer(Transfer transfer)
         {
-            RestRequest request = new RestRequest(USER_URL + "transfer/new");
+            RestRequest request = new RestRequest(USER_URL + "transfer");
             request.AddJsonBody(transfer);
-            IRestResponse<Transfer> response = client.Get<Transfer>(request);
+            IRestResponse<Transfer> response = client.Post<Transfer>(request);
 
             if (response.ResponseStatus != ResponseStatus.Completed || !response.IsSuccessful)
             {

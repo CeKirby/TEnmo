@@ -27,7 +27,7 @@ namespace TenmoServer.DAO
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("INSERT INTO transfer VALUES (@transfer_type_id, @transfer_status_id, @account_from, @account_to, @amount)", conn);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO transfers (transfer_type_id, transfer_status_id, account_from, account_to, amount) VALUES (@transfer_type_id, @transfer_status_id, @account_from, @account_to, @amount)", conn);
                     cmd.Parameters.AddWithValue("@transfer_type_id", transfer.TransferTypeId);
                     cmd.Parameters.AddWithValue("@transfer_status_id", transfer.TransferStatusId);
                     cmd.Parameters.AddWithValue("@account_from", transfer.AccountFrom);
