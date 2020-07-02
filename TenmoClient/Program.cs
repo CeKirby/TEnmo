@@ -152,6 +152,17 @@ namespace TenmoClient
                             Data.Account accountFrom = authService.GetAccount(loggedInUserId);
                             Data.Account accountTo = authService.GetAccount(userTo.UserId);
                             Data.Transfer newTransfer = new Data.Transfer(2, 2, accountFrom.accountId, accountTo.accountId, amount);
+                            if (newTransfer != null)
+                            {
+                                Data.Transfer addedTransfer = authService.CreateTransfer(newTransfer);
+                                if(addedTransfer != null)
+                                {
+                                    Console.WriteLine("Transfer Completed.");
+                                } else
+                                {
+                                    Console.WriteLine("There was a error completing your transfer.");
+                                }
+                            }
 
                         }
 
