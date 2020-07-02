@@ -115,37 +115,39 @@ namespace TenmoClient
                         //select user
                         Console.WriteLine("Input the UserId of the person who you want to send TEBucks:");
                         int userId = Convert.ToInt32(Console.ReadLine());
-                        string usernameTo = authService.GetUser(userId);
+                        API_User userTo = authService.GetUser(userId);
 
                         //input amount 
-                        Console.WriteLine($"Input the amount you want to send to {usernameTo}:");
+                        Console.WriteLine($"Input the amount you want to send to {userTo.Username}:");
                         int amount = Convert.ToInt32(Console.ReadLine());
 
                         //verify amount < account balance
-                        consoleService.VerifyAccountBalancePrompt(userBalance, amount, usernameTo);
+                        consoleService.VerifyAccountBalancePrompt(userBalance, amount, userTo.Username);
+                    
+                    consoleService.DisplayTransfer();
+                    //Confirm transfer is still wanted
+                    Console.WriteLine("Confirm Transfer? Y/N");
+                    string response = Console.ReadLine().ToLower();
+                    if (response != "y")
+                    {
+                        //TODO FIX
+                        MenuSelection();
+                    } else
+                    {
+                        
+
+
+                    }
+
+                        //create transfer (transfer contains (userIdFrom, userIdTo, amount, transfer type = 2)
+                        //receiver balance increased by amount
+                        //sender balance decreased by amount
+                        //transferStatus = Approved(2)
                     }
                     catch (Exception e)
                     {
                         Console.WriteLine("You entered an invalid Response. Please try again.");
                     }
-                    consoleService.DisplayTransfer();
-                    //Confirm transfer is still wanted
-                    Console.WriteLine("Confirm Transfer? Y/N");
-                    string response = Console.ReadLine().ToLower();
-                    if (response == "y")
-                    {
-
-                    } else
-                    {
-                        //TODO FIX
-
-
-                    }
-
-                    //create transfer (transfer contains (userIdFrom, userIdTo, amount, transfer type = 2)
-                    //receiver balance increased by amount
-                    //sender balance decreased by amount
-                    //transferStatus = Approved(2)
                 }
                 else if (menuSelection == 5)
                 {

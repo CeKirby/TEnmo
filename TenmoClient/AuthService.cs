@@ -90,7 +90,7 @@ namespace TenmoClient
             return null;
         }
 
-        public string GetUser(int id)
+        public API_User GetUser(int id)
         {
             RestRequest request = new RestRequest(USER_URL + $"{id}");
             IRestResponse<API_User> response = client.Get<API_User>(request);
@@ -101,8 +101,8 @@ namespace TenmoClient
             }
             else
             {
-                string username = response.Data.Username;
-                return username;
+                
+                return response.Data;
             }
             return null;
         }
