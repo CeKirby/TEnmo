@@ -1,6 +1,7 @@
 ﻿using RestSharp;
 using RestSharp.Authenticators;
 using System;
+using System.Collections.Generic;
 using TenmoClient.Data;
 
 
@@ -89,6 +90,21 @@ namespace TenmoClient
             return null;
         }
 
+        public List<API_User> GetUsers()
+        {
+            RestRequest request = new RestRequest(USER_URL);
+            IRestResponse<List<API_User>> response = client.Get<List<API_User>>(request);
+
+            if (response.ResponseStatus != ResponseStatus.Completed || !response.IsSuccessful)
+            {
+                ProcessErrorResponse(response);
+            }
+            else
+            {
+                return response.Data;
+            }
+            return null;
+        }
 
         private void ProcessErrorResponse(IRestResponse response)
         {

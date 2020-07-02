@@ -105,7 +105,8 @@ namespace TenmoClient
                 else if (menuSelection == 4)
                 {
                     //print users to select recipient
-                    consoleService.DisplayUsers();
+                    List<API_User> users = authService.GetUsers();
+                    consoleService.DisplayUsers(users);
                     //select user
                     Console.WriteLine("Input the UserId of the person who you want to send TEBucks:");
                     int userId = Convert.ToInt32(Console.ReadLine());
