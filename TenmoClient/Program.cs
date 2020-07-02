@@ -12,7 +12,7 @@ namespace TenmoClient
         private static readonly AuthService authService = new AuthService();
         private static int loggedInUserId = UserService.GetUserId();
         private static decimal userBalance;
-        
+
 
         static void Main(string[] args)
         {
@@ -119,25 +119,29 @@ namespace TenmoClient
 
                         //input amount 
                         Console.WriteLine($"Input the amount you want to send to {userTo.Username}:");
-                        int amount = Convert.ToInt32(Console.ReadLine());
+                        decimal amount = Convert.ToDecimal(Console.ReadLine());
 
                         //verify amount < account balance
-                        consoleService.VerifyAccountBalancePrompt(userBalance, amount, userTo.Username);
-                    
-                    consoleService.DisplayTransfer();
-                    //Confirm transfer is still wanted
-                    Console.WriteLine("Confirm Transfer? Y/N");
-                    string response = Console.ReadLine().ToLower();
-                    if (response != "y")
-                    {
-                        //TODO FIX
-                        MenuSelection();
-                    } else
-                    {
-                        
+                        amount = consoleService.VerifyAccountBalancePrompt(userBalance, amount, userTo.Username);
+                        if (amount < 0)
+                        {
+                            MenuSelection();
+                        }
+                        consoleService.DisplayTransfer(amount, userTo.Username);
+                        //Confirm transfer is still wanted
+                        Console.WriteLine("Confirm Transfer? Y/N");
+                        string response = Console.ReadLine().ToLower();
+                        if (response != "y")
+                        {
+                            //TODO FIX
+                            MenuSelection();
+                        }
+                        else
+                        {
 
 
-                    }
+
+                        }
 
                         //create transfer (transfer contains (userIdFrom, userIdTo, amount, transfer type = 2)
                         //receiver balance increased by amount

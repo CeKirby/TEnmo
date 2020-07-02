@@ -90,9 +90,9 @@ namespace TenmoClient
             }
         }
 
-        public bool VerifyAccountBalancePrompt(decimal userBalance, int amount, string usernameTo)
+        public decimal VerifyAccountBalancePrompt(decimal userBalance, decimal amountToSend, string usernameTo)
         {
-            bool balanceVerified = false;
+            decimal amount = amountToSend;
             while (userBalance < amount)
             {
                 Console.WriteLine("You do not have enough TEBucks in your account to make this transfer.");
@@ -105,14 +105,14 @@ namespace TenmoClient
                 }
                 else if (response == 0)
                 {
-                    return balanceVerified;
+                    amount = -1;
                 }
             }
-            balanceVerified = true;
-            return balanceVerified;
+            
+            return amount;
         }
     
-        public void DisplayTransfer()
+        public void DisplayTransfer(decimal amount, string userToUsername)
         {
 
         }
