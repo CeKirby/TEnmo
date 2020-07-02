@@ -89,6 +89,16 @@ namespace TenmoClient
                 Console.WriteLine($"  {user.UserId}      ||  {user.Username}");
             }
         }
+
+        public void DisplayTransfer()
+        {
+
+        }
+
+        public void DisplayAllUserTransfers(API_User user)
+        {
+
+        }
     }
 
 }

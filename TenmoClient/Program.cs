@@ -10,8 +10,10 @@ namespace TenmoClient
     {
         private static readonly ConsoleService consoleService = new ConsoleService();
         private static readonly AuthService authService = new AuthService();
-        private static int LoggedInUserId = UserService.GetUserId();
+        private static int loggedInUserId = UserService.GetUserId();
+        private static decimal userBalance;
         
+
         static void Main(string[] args)
         {
             Run();
@@ -39,7 +41,7 @@ namespace TenmoClient
                         if (user != null)
                         {
                             UserService.SetLogin(user);
-                            LoggedInUserId = UserService.GetUserId();
+                            loggedInUserId = UserService.GetUserId();
                         }
                     }
                 }
@@ -90,8 +92,8 @@ namespace TenmoClient
                 }
                 else if (menuSelection == 1)
                 {
-                    Data.Account account = authService.GetAccount(LoggedInUserId);
-                    decimal balance = account.balance;
+                    Data.Account account = authService.GetAccount(loggedInUserId);
+                    userBalance = account.balance;
                     consoleService.PrintBalance(account);
                 }
                 else if (menuSelection == 2)
@@ -104,15 +106,44 @@ namespace TenmoClient
                 }
                 else if (menuSelection == 4)
                 {
-                    //print users to select recipient
-                    List<API_User> users = authService.GetUsers();
-                    consoleService.DisplayUsers(users);
-                    //select user
-                    Console.WriteLine("Input the UserId of the person who you want to send TEBucks:");
-                    int userId = Convert.ToInt32(Console.ReadLine());
-                    //input amount (transfer contains (userIdFrom, userIdTo, amount) transfer type = 2
-                    Console.WriteLine("Input the amount you want to send to {user.username}:");
-                    //verify amount < account balance
+                    try
+                    {
+                        //print users to select recipient
+                        List<API_User> users = authService.GetUsers();
+                        consoleService.DisplayUsers(users);
+
+                        //select user
+                        Console.WriteLine("Input the UserId of the person who you want to send TEBucks:");
+                        int userId = Convert.ToInt32(Console.ReadLine());
+                        string usernameTo = authService.GetUser(userId);
+
+                        //input amount 
+                        Console.WriteLine($"Input the amount you want to send to {usernameTo}:");
+                        int amount = Convert.ToInt32(Console.ReadLine());
+
+                        //verify amount < account balance
+                        while (userBalance < amount)
+                        {
+                            Console.WriteLine("You do not have enough TEBucks in your account to make this transfer.");
+                            Console.WriteLine("Change amount (1) or return to the Main Menu(0)?");
+                            int response = Convert.ToInt32(Console.ReadLine());
+                            if (response == 1)
+                            {
+                                Console.WriteLine($"Input the amount you want to send to {usernameTo}:");
+                                amount = Convert.ToInt32(Console.ReadLine());
+                            }
+                            else if (response == 0)
+                            {
+                                Run();
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("You entered an invalid Response. Please try again.");
+                    }
+                    //Confirm transfer is still wanted
+                    //create transfer (transfer contains (userIdFrom, userIdTo, amount, transfer type = 2)
                     //receiver balance increased by amount
                     //sender balance decreased by amount
                     //transferStatus = Approved(2)

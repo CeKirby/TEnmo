@@ -90,6 +90,22 @@ namespace TenmoClient
             return null;
         }
 
+        public string GetUser(int id)
+        {
+            RestRequest request = new RestRequest(USER_URL + $"{id}");
+            IRestResponse<API_User> response = client.Get<API_User>(request);
+
+            if (response.ResponseStatus != ResponseStatus.Completed || !response.IsSuccessful)
+            {
+                ProcessErrorResponse(response);
+            }
+            else
+            {
+                string username = response.Data.Username;
+                return username;
+            }
+            return null;
+        }
         public List<API_User> GetUsers()
         {
             RestRequest request = new RestRequest(USER_URL);
