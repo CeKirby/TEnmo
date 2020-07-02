@@ -18,6 +18,6 @@ namespace TenmoServer.DAO
 
         Transfer GetTransfer(int transferId);
 
-        List<Transfer> GetPastTransfers();
+        List<Transfer> GetPastTransfers(Transfer transfer);
     }
 }

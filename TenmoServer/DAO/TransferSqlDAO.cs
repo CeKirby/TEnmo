@@ -47,9 +47,9 @@ namespace TenmoServer.DAO
                 throw;
             }
         }
-        public List<Transfer> GetPastTransfers()
+        public List<Transfer> GetPastTransfers(Transfer transfer)
         {
-            List<Transfer> transfer = new List<Transfer>();
+            List<Transfer> pastTransfers = new List<Transfer>();
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -65,7 +65,7 @@ namespace TenmoServer.DAO
                             while (reader.Read())
                             {
                                 Transfer t = GetTransferFromReader(reader);
-                            transfer.Add(t);
+                            pastTransfers.Add(t);
                             }
 
                         }
@@ -76,7 +76,7 @@ namespace TenmoServer.DAO
                 throw;
             }
 
-            return transfer;
+            return pastTransfers;
         }
 
         /// <summary>
