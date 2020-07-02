@@ -47,6 +47,37 @@ namespace TenmoServer.DAO
                 throw;
             }
         }
+        public List<Transfer> GetPastTransfers(Transfer transfer)
+        {
+            List<Transfer> pastTransfers = new List<Transfer>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM transfer WHERE transfer_id = @transferid", conn);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows && reader.Read())
+                     
+                        {
+                            while (reader.Read())
+                            {
+                                Transfer t = GetTransferFromReader(reader);
+                            pastTransfers.Add(t);
+                            }
+
+                        }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return pastTransfers;
+        }
 
         /// <summary>
         /// Find transfer by transferId
