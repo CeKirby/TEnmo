@@ -114,7 +114,10 @@ namespace TenmoClient
     
         public void DisplayTransfer(decimal amount, string userToUsername)
         {
-
+            string date = DateTime.Today.ToString("dd/MM/yyyy");
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine($" Send to - {userToUsername} | Amount: ${amount} | {date}");
+            Console.WriteLine("--------------------------------------------");
         }
 
         public void DisplayAllUserTransfers(API_User user)

@@ -8,7 +8,7 @@ namespace TenmoServer.DAO
 {
     public interface ITransferDAO
     {
-        int SendTransfer(int userIdFrom, int UserIdTo);
+        Transfer CreateTransfer(Transfer transfer);
 
         bool ApproveTransfer(int transferId);
 

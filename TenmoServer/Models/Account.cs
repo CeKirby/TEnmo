@@ -10,5 +10,6 @@ namespace TenmoServer.Models
         public int account_id { get; set; }
         public int user_id { get; set; }
         public decimal balance { get; set; }
+
     }
 }
