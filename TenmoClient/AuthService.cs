@@ -122,6 +122,23 @@ namespace TenmoClient
             return null;
         }
 
+        public Transfer GetTransfers(int id)
+        {
+            RestRequest request = new RestRequest(USER_URL + $"transfer/{id}");
+            IRestResponse<Transfer> response = client.Get<Transfer>(request);
+
+            if (response.ResponseStatus != ResponseStatus.Completed || !response.IsSuccessful)
+            {
+                ProcessErrorResponse(response);
+            }
+            else
+            {
+
+                return response.Data;
+            }
+            return null;
+        }
+
         private void ProcessErrorResponse(IRestResponse response)
         {
             if (response.ResponseStatus != ResponseStatus.Completed)

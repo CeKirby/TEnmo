@@ -98,7 +98,7 @@ namespace TenmoClient
                 }
                 else if (menuSelection == 2)
                 {
-                        Data.Transfer transfers = authService.GetTransfers(Id);
+                        Data.Transfer transfers = authService.GetTransfers(loggedInUserId);
                         if (transfers != null)
                         {
                         Console.WriteLine(" Id: " + transfers.TransferId);

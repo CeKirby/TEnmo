@@ -29,12 +29,6 @@ namespace TenmoServer.Controllers
             transferDAO = _transferDAO;
         }
 
-        public UserController(IAccountDAO accountDAO, ITransferDAO transferDAO)
-            {
-                _accountDAO = accountDAO;
-                _transferDAO = transferDAO;
-
-            }
         
         [HttpGet]
         public List<User> ListUsers()
@@ -68,10 +62,10 @@ namespace TenmoServer.Controllers
 
 
         [HttpGet("transfer/{id}")]
-        public ActionResult<Transfer> GetPastTransactions(int id)
+        public ActionResult<Transfer> GetTransferDetails(int id)
         {
             
-                Transfer transfer = _transferDAO.GetTransfer(id);
+                Transfer transfer = transferDAO.GetTransfer(id);
                 if (transfer != null)
                 {
                 return transfer;
