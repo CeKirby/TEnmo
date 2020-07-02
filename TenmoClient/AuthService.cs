@@ -74,9 +74,9 @@ namespace TenmoClient
             }
         }
       
-        public Account GetAccount(int id)
+        public Account GetAccount(int userId)
         {
-            RestRequest request = new RestRequest(USER_URL + $"account/{id}");
+            RestRequest request = new RestRequest(USER_URL + $"account/{userId}");
             IRestResponse<Account> response = client.Get<Account>(request);
 
             if (response.ResponseStatus != ResponseStatus.Completed || !response.IsSuccessful)
@@ -119,6 +119,23 @@ namespace TenmoClient
             {
                 return response.Data;
             }
+            return null;
+        }
+
+        public Transfer CreateTransfer(Transfer transfer)
+        {
+            RestRequest request = new RestRequest(USER_URL + "transfer/new");
+            IRestResponse<Transfer> response = client.Get<Transfer>(request);
+
+            if (response.ResponseStatus != ResponseStatus.Completed || !response.IsSuccessful)
+            {
+                ProcessErrorResponse(response);
+            }
+            else
+            {
+                return response.Data;
+            }
+
             return null;
         }
 

@@ -17,7 +17,7 @@ namespace TenmoServer.DAO
         }
 
          Account account = new Account();
-        public Account GetAccount(int accountId)
+        public Account GetAccount(int userId)
         {
             try
             {
@@ -25,8 +25,8 @@ namespace TenmoServer.DAO
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT * FROM accounts WHERE account_id = @account_id", conn);
-                    cmd.Parameters.AddWithValue("@account_id", accountId);
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM accounts WHERE user_id = @user_id", conn);
+                    cmd.Parameters.AddWithValue("@user_id", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     if (reader.HasRows && reader.Read())

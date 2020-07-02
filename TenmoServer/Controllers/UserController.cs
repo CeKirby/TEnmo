@@ -43,10 +43,10 @@ namespace TenmoServer.Controllers
 
         }
 
-        [HttpGet("account/{id}")]
-        public ActionResult<Account> GetAccountById(int id)
+        [HttpGet("account/{userId}")]
+        public ActionResult<Account> GetAccountById(int userId)
         {
-            Account account = accountDAO.GetAccount(id);
+            Account account = accountDAO.GetAccount(userId);
 
             if (account != null)
             {
@@ -74,16 +74,17 @@ namespace TenmoServer.Controllers
 
         //}
         [HttpGet("transfer/{id}")]
-        public ActionResult<User> GetTransactionsByUserId(int id)
+        public ActionResult<User> GetTransfersByUserId(int id)
         {
             return null;
 
         }
 
         [HttpPost("transfer/new")]
-        public ActionResult<User> NewTransfer()
+        public ActionResult<Transfer> NewTransfer(Transfer transfer)
         {
-            return null;
+            Transfer added = transferDAO.CreateTransfer(transfer);
+            return Created($"/reservations/{added.TransferId}", added);
 
         }
 

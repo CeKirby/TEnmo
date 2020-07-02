@@ -19,10 +19,35 @@ namespace TenmoServer.DAO
         /// Create new transfer from authorized user to listed user
         /// </summary>
         /// <returns></returns>
-        public int SendTransfer(int userIdFrom, int UserIdTo)
+        public Transfer CreateTransfer(Transfer transfer)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("INSERT INTO transfer VALUES (@transfer_type_id, @transfer_status_id, @account_from, @account_to, @amount)", conn);
+                    cmd.Parameters.AddWithValue("@transfer_type_id", transfer.TransferTypeId);
+                    cmd.Parameters.AddWithValue("@transfer_status_id", transfer.TransferStatusId);
+                    cmd.Parameters.AddWithValue("@account_from", transfer.AccountFrom);
+                    cmd.Parameters.AddWithValue("@account_to", transfer.AccountTo);
+                    cmd.Parameters.AddWithValue("@amount", transfer.Amount);
+
+                    cmd.ExecuteNonQuery();
+                    cmd = new SqlCommand("SELECT @@IDENTITY", conn);
+                    int id = Convert.ToInt32(cmd.ExecuteScalar());
+
+                    transfer.TransferId = id;
+                    return transfer;
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
         }
+
         /// <summary>
         /// Find transfer by transferId
         /// </summary>
@@ -30,7 +55,7 @@ namespace TenmoServer.DAO
         /// <returns></returns>
         public Transfer GetTransfer(int transferId)
         {
-            Transfer transfer = new Transfer();
+            Transfer transfer;
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -43,6 +68,7 @@ namespace TenmoServer.DAO
                     if (reader.HasRows && reader.Read())
                     {
                         transfer = GetTransferFromReader(reader);
+                        return transfer;
                     }
                 }
             }
@@ -50,7 +76,7 @@ namespace TenmoServer.DAO
             {
                 throw;
             }
-            return transfer;
+            return null;
         }
         /// <summary>
         /// Check status of transfer
