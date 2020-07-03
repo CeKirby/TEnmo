@@ -125,14 +125,16 @@ namespace TenmoClient
 
         //    }
         //}
+
+           
         public void PrintTransfers(List<Transfer> transfers)
         {
             Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("Transfer Id");
+            Console.WriteLine("Transfer Id  || To ||  From || Amount");
             Console.WriteLine("--------------------------------------------");
             foreach (Transfer transfer in transfers)
             {
-                Console.WriteLine(transfer.TransferId + "  |  ");
+                Console.WriteLine($"{ transfer.TransferId} || {transfer.AccountTo} || {transfer.AccountFrom}  || ${+ transfer.Amount}");
             }
         }
     }
