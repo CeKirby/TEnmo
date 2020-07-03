@@ -81,19 +81,24 @@ namespace TenmoServer.Controllers
 
         }
 
-        [HttpGet("transfer/{id}")]
-        public ActionResult<User> GetTransfersByUserId(int id)
-        {
-            return null;
-
-        }
-
         [HttpPost("transfer")]
         public ActionResult<Transfer> NewTransfer(Transfer transfer)
         {
             Transfer added = transferDAO.CreateTransfer(transfer);
             return Created($"transfer/{added.TransferId}", added);
 
+        }
+        [HttpPut("account/{userId}")]
+        public ActionResult<Account> UpdateAccount(int userId, Account updatedAccount)
+        {
+            Account existingAccount = accountDAO.GetAccount(userId);
+            if (existingAccount == null)
+            {
+                return NotFound("Reservation does not exist");
+            }
+
+            Account result = accountDAO.UpdateAccount(userId, updatedAccount);
+            return Ok(result);
         }
 
         [HttpPut("transfer/{id}")]

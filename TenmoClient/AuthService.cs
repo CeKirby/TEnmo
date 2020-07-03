@@ -174,9 +174,11 @@ namespace TenmoClient
             return null;
         }
 
-        public Account UpdateAccount(int userId, Account updatedAccount)
+        public Account UpdateAccount(int userId, decimal newBalance)
         {
-            RestRequest request = new RestRequest(USER_URL + "account/{userId}");
+            Account updatedAccount = GetAccount(userId);
+            updatedAccount.balance = newBalance;
+            RestRequest request = new RestRequest(USER_URL + $"account/{userId}");
             request.AddJsonBody(updatedAccount);
             IRestResponse<Account> response = client.Put<Account>(request);
 
