@@ -43,6 +43,8 @@ namespace TenmoClient
                         {
                             UserService.SetLogin(user);
                             loggedInUserId = UserService.GetUserId();
+                            loggedInAccount = authService.GetAccount(loggedInUserId);
+                            userBalance = loggedInAccount.balance;
                         }
                     }
                 }
@@ -168,10 +170,15 @@ namespace TenmoClient
                             if (newTransfer != null)
                             {
                                 Data.Transfer addedTransfer = authService.CreateTransfer(newTransfer);
-                                if(addedTransfer != null)
+                                if (addedTransfer != null)
                                 {
+                                    //receiver balance increased by amount
+                                    //sender balance decreased by amount
+                                    accountFrom = authService.UpdateAccount(loggedInUserId, (accountFrom.balance - amount));
+                                    accountTo = authService.UpdateAccount(userTo.UserId, (accountTo.balance + amount));
                                     Console.WriteLine("Transfer Completed.");
-                                } else
+                                }
+                                else
                                 {
                                     Console.WriteLine("There was a error completing your transfer.");
                                 }
@@ -179,10 +186,6 @@ namespace TenmoClient
 
                         }
 
-
-                        //receiver balance increased by amount
-                        //sender balance decreased by amount
-                        //transferStatus = Approved(2)
                     }
                     catch (Exception e)
                     {
@@ -212,7 +215,7 @@ namespace TenmoClient
                     Console.WriteLine("Goodbye!");
                     Environment.Exit(0);
                 }
-                }
             }
         }
     }
+}
