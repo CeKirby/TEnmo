@@ -129,12 +129,11 @@ namespace TenmoClient
         public void DisplayTransfers(List<Transfer> transfers)
         {
             Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("Transfer Id");
+            Console.WriteLine("Transfer Id  || To ||  From || Amount");
             Console.WriteLine("--------------------------------------------");
             foreach (Transfer transfer in transfers)
             {
-                string type = TransferType(transfer);
-                Console.WriteLine($"Transfer Id: {transfer.TransferId} -   ${transfer.Amount}.");
+                Console.WriteLine($"{ transfer.TransferId} || {transfer.AccountTo} || {transfer.AccountFrom}  || ${+ transfer.Amount}");
             }
         }
 
@@ -160,7 +159,7 @@ namespace TenmoClient
             }
             else if (transfer.TransferTypeId == 1)
             {
-                type = "Recieved";
+                type = "Received";
             }
 
             return type;

@@ -108,15 +108,16 @@ namespace TenmoClient
                         consoleService.DisplayTransfers(pastTransfers);
                     }
                     Console.WriteLine("Please enter a transfer ID to view details(0 to cancel):");
-                    int transferId = Convert.ToInt32(Console.ReadLine());
+                    int userInput = Convert.ToInt32(Console.ReadLine());
 
-                    Data.Transfer transfer = authService.GetTransferDetails(transferId);
-                    if (transfer != null)
                     {
-                        consoleService.DisplayTransferDetails(transfer);
+                        Data.Transfer transfer = authService.GetTransferDetails(userInput);
+                        if (transfer != null)
+                        {
+                            consoleService.DisplayTransferDetails(transfer);
+                        }
                     }
-
-                }
+            }
 
                 else if (menuSelection == 3)
                 {
@@ -159,7 +160,7 @@ namespace TenmoClient
                             //create transfer (transfer contains (userIdFrom, userIdTo, amount, transfer type = 2)
                             Data.Account accountFrom = authService.GetAccount(loggedInUserId);
                             Data.Account accountTo = authService.GetAccount(userTo.UserId);
-                            Data.Transfer newTransfer = new Data.Transfer(2, 2, accountFrom.accountId, accountTo.accountId, amount);
+                            Data.Transfer newTransfer = new Data.Transfer( 2, 2, accountFrom.accountId, accountTo.accountId, amount);
                             if (newTransfer != null)
                             {
                                 Data.Transfer addedTransfer = authService.CreateTransfer(newTransfer);
