@@ -88,126 +88,123 @@ namespace TenmoClient
                 Console.WriteLine("0: Exit");
                 Console.WriteLine("---------");
                 Console.Write("Please choose an option: ");
-
                 if (!int.TryParse(Console.ReadLine(), out menuSelection))
                 {
                     Console.WriteLine("Invalid input. Please enter only a number.");
                 }
-                else if (menuSelection == 1)
+                switch (menuSelection)
                 {
-                    loggedInAccount = authService.GetAccount(loggedInUserId);
-                    userBalance = loggedInAccount.balance;
-                    consoleService.PrintBalance(loggedInAccount);
-                }
-                else if (menuSelection == 2)
-                {
-                    loggedInAccount = authService.GetAccount(loggedInUserId);
-                    List<Data.Transfer> pastTransfers = authService.GetPastTransfers(loggedInAccount.accountId);
-                    if (pastTransfers != null && pastTransfers.Count > 0)
-                    {
-                        consoleService.DisplayTransfers(pastTransfers);
-                    }
-                    Console.WriteLine("Please enter a transfer ID to view details(0 to cancel):");
-                    int userInput = Convert.ToInt32(Console.ReadLine());
-
-                    {
-                        Data.Transfer transfer = authService.GetTransferDetails(userInput);
-                        if (transfer != null)
+                    case 1:
+                        loggedInAccount = authService.GetAccount(loggedInUserId);
+                        userBalance = loggedInAccount.balance;
+                        consoleService.PrintBalance(loggedInAccount);
+                        break;
+                    case 2:
+                        loggedInAccount = authService.GetAccount(loggedInUserId);
+                        List<Data.Transfer> pastTransfers = authService.GetPastTransfers(loggedInAccount.accountId);
+                        if (pastTransfers != null && pastTransfers.Count > 0)
                         {
-                            consoleService.DisplayTransferDetails(transfer);
+                            consoleService.DisplayTransfers(pastTransfers);
                         }
-                    }
-            }
+                        Console.WriteLine("Please enter a transfer ID to view details(0 to cancel):");
+                        int userInput = Convert.ToInt32(Console.ReadLine());
 
-                else if (menuSelection == 3)
-                {
-
-                }
-                else if (menuSelection == 4)
-                {
-                    try
-                    {
-                        //print users to select recipient
-                        List<API_User> users = authService.GetUsers();
-                        consoleService.DisplayUsers(users);
-
-                        //select user
-                        Console.WriteLine("Input the UserId of the person who you want to send TEBucks:");
-                        int userId = Convert.ToInt32(Console.ReadLine());
-                        API_User userTo = authService.GetUser(userId);
-
-                        //input amount 
-                        Console.WriteLine($"Input the amount you want to send to {userTo.Username}:");
-                        decimal amount = Convert.ToDecimal(Console.ReadLine());
-
-                        //verify amount < account balance
-                        amount = consoleService.VerifyAccountBalancePrompt(userBalance, amount, userTo.Username);
-                        if (amount < 0)
                         {
-                            MenuSelection();
-                        }
-                        consoleService.DisplaySendTransfer(amount, userTo.Username);
-                        //Confirm transfer is still wanted
-                        Console.WriteLine("Confirm Transfer? Y/N");
-                        string response = Console.ReadLine().ToLower();
-                        if (response != "y")
-                        {
-                            //TODO FIX
-                            MenuSelection();
-                        }
-                        else
-                        {
-                            //create transfer (transfer contains (userIdFrom, userIdTo, amount, transfer type = 2)
-                            Data.Account accountFrom = authService.GetAccount(loggedInUserId);
-                            Data.Account accountTo = authService.GetAccount(userTo.UserId);
-                            Data.Transfer newTransfer = new Data.Transfer( 2, 2, accountFrom.accountId, accountTo.accountId, amount);
-                            if (newTransfer != null)
+                            Data.Transfer transfer = authService.GetTransferDetails(userInput);
+                            if (transfer != null)
                             {
-                                Data.Transfer addedTransfer = authService.CreateTransfer(newTransfer);
-                                if (addedTransfer != null)
+                                consoleService.DisplayTransferDetails(transfer);
+                            }
+                        }
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        try
+                        {
+                            //print users to select recipient
+                            List<API_User> users = authService.GetUsers();
+                            consoleService.DisplayUsers(users);
+
+                            //select user
+                            Console.WriteLine("Input the UserId of the person who you want to send TEBucks:");
+                            int userId = Convert.ToInt32(Console.ReadLine());
+                            API_User userTo = authService.GetUser(userId);
+
+                            //input amount 
+                            Console.WriteLine($"Input the amount you want to send to {userTo.Username}:");
+                            decimal amount = Convert.ToDecimal(Console.ReadLine());
+
+                            //verify amount < account balance
+                            amount = consoleService.VerifyAccountBalancePrompt(userBalance, amount, userTo.Username);
+                            if (amount < 0)
+                            {
+                                break;
+                            }
+                            consoleService.DisplaySendTransfer(amount, userTo.Username);
+                            //Confirm transfer is still wanted
+                            Console.WriteLine("Confirm Transfer? Y/N");
+                            string response = Console.ReadLine().ToLower();
+                            if (response != "y")
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                //create transfer (transfer contains (userIdFrom, userIdTo, amount, transfer type = 2)
+                                Data.Account accountFrom = authService.GetAccount(loggedInUserId);
+                                Data.Account accountTo = authService.GetAccount(userTo.UserId);
+                                Data.Transfer newTransfer = new Data.Transfer(2, 2, accountFrom.accountId, accountTo.accountId, amount);
+                                if (newTransfer != null)
                                 {
-                                    //receiver balance increased by amount
-                                    //sender balance decreased by amount
-                                    accountFrom = authService.UpdateAccount(loggedInUserId, (accountFrom.balance - amount));
-                                    accountTo = authService.UpdateAccount(userTo.UserId, (accountTo.balance + amount));
-                                    Console.WriteLine("Transfer Completed.");
+                                    Data.Transfer addedTransfer = authService.CreateTransfer(newTransfer);
+                                    if (addedTransfer != null)
+                                    {
+                                        //receiver balance increased by amount
+                                        //sender balance decreased by amount
+                                        accountFrom = authService.UpdateAccount(loggedInUserId, (accountFrom.balance - amount));
+                                        accountTo = authService.UpdateAccount(userTo.UserId, (accountTo.balance + amount));
+                                        Console.WriteLine("Transfer Completed.");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("There was a error completing your transfer.");
+                                    }
                                 }
-                                else
-                                {
-                                    Console.WriteLine("There was a error completing your transfer.");
-                                }
+
                             }
 
                         }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("You entered an invalid Response. Please try again.");
+                        }
+                        break;
+                    case 5:
+                        //print users to select user for request
+                        //select user
+                        //input amount requested (transfer contains (userIdFrom, userIdTo, amount) transfer type = 1
+                        //transferStatus = Pending(1)
+                        //userFrom approve/deny request
+                        //verify amount < userFrom account balance
+                        //reciever balance increased by amount
+                        //sender balance decreased by amount
+                        //TransferStatus changed to Approved or Rejected
+                        break;
 
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine("You entered an invalid Response. Please try again.");
-                    }
-                }
-                else if (menuSelection == 5)
-                {
-                    //print users to select user for request
-                    //select user
-                    //input amount requested (transfer contains (userIdFrom, userIdTo, amount) transfer type = 1
-                    //transferStatus = Pending(1)
-                    //userFrom approve/deny request
-                    //verify amount < userFrom account balance
-                    //reciever balance increased by amount
-                    //sender balance decreased by amount
-                    //TransferStatus changed to Approved or Rejected
-                }
-                else if (menuSelection == 6)
-                {
-                    Console.WriteLine("");
-                    UserService.SetLogin(new API_User()); //wipe out previous login info
-                    Run(); //return to entry point
-                }
-                else
-                {
-                    Console.WriteLine("Goodbye!");
-                    Environment.Exit(0);
+                    case 6:
+                        Console.WriteLine("");
+                        UserService.SetLogin(new API_User()); //wipe out previous login info
+                        Run(); //return to entry point
+                        break;
+                    case 0:
+                        Console.WriteLine("Goodbye!");
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        Console.WriteLine("Please enter a number from the list displayed.");
+                        break;
+
                 }
             }
         }
