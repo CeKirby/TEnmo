@@ -105,24 +105,17 @@ namespace TenmoClient
                     List<Data.Transfer> pastTransfers = authService.GetPastTransfers(loggedInAccount.accountId);
                     if (pastTransfers != null && pastTransfers.Count > 0)
                     {
-                        consoleService.PrintTransfers(pastTransfers);
+                        consoleService.DisplayTransfers(pastTransfers);
                     }
                     Console.WriteLine("Please enter a transfer ID to view details(0 to cancel):");
-                    int userId = Convert.ToInt32(Console.ReadLine());
+                    int transferId = Convert.ToInt32(Console.ReadLine());
 
-                    if (userId == loggedInUserId)
+                    Data.Transfer transfer = authService.GetTransferDetails(transferId);
+                    if (transfer != null)
                     {
-                        Data.Transfer transfers = authService.GetTransferDetails(loggedInUserId);
-                        if (transfers != null)
-                        {
-                            Console.WriteLine(" Id: " + transfers.TransferId);
-                            Console.WriteLine(" Type Id: " + transfers.TransferTypeId);
-                            Console.WriteLine(" Status Id: " + transfers.TransferStatusId);
-                            Console.WriteLine(" Account From: " + transfers.AccountFrom);
-                            Console.WriteLine(" Account To: " + transfers.AccountTo);
-                            Console.WriteLine(" Amount: " + transfers.Amount);
-                        }
+                        consoleService.DisplayTransferDetails(transfer);
                     }
+
                 }
 
                 else if (menuSelection == 3)
@@ -152,7 +145,7 @@ namespace TenmoClient
                         {
                             MenuSelection();
                         }
-                        consoleService.DisplayTransfer(amount, userTo.Username);
+                        consoleService.DisplaySendTransfer(amount, userTo.Username);
                         //Confirm transfer is still wanted
                         Console.WriteLine("Confirm Transfer? Y/N");
                         string response = Console.ReadLine().ToLower();

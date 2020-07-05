@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TenmoClient.Data;
 
 
-
 namespace TenmoClient
 {
     public class ConsoleService
@@ -112,29 +111,77 @@ namespace TenmoClient
             return amount;
         }
 
-        public void DisplayTransfer(decimal amount, string userToUsername)
+        public void DisplaySendTransfer(decimal amount, string userToUsername)
         {
             string date = DateTime.Today.ToString("dd/MM/yyyy");
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine($" Send to - {userToUsername} | Amount: ${amount} | {date}");
             Console.WriteLine("--------------------------------------------");
         }
+        public void DisplayRequestTransfer(decimal amount, string userToUsername)
+        {
+            string date = DateTime.Today.ToString("dd/MM/yyyy");
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine($" Request from - {userToUsername} | Amount: ${amount} | {date}");
+            Console.WriteLine("--------------------------------------------");
+        }
 
-        //    public void DisplayAllUserTransfers(API_User user)
-        //    {
-
-        //    }
-        //}
-        public void PrintTransfers(List<Transfer> transfers)
+        public void DisplayTransfers(List<Transfer> transfers)
         {
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("Transfer Id");
             Console.WriteLine("--------------------------------------------");
             foreach (Transfer transfer in transfers)
             {
-                Console.WriteLine(transfer.TransferId + "  |  ");
+                string type = TransferType(transfer);
+                Console.WriteLine($"Transfer Id: {transfer.TransferId} -   ${transfer.Amount}.");
             }
         }
+
+        public void DisplayTransferDetails(Transfer transfer)
+        {
+            string type = TransferType(transfer);
+            string status = TransferStatus(transfer);
+
+            Console.WriteLine(" Id: " + transfer.TransferId);
+            Console.WriteLine(" Type: " + type);
+            Console.WriteLine(" Status: " + status);
+            Console.WriteLine(" Account From: " + transfer.AccountFrom);
+            Console.WriteLine(" Account To: " + transfer.AccountTo);
+            Console.WriteLine(" Amount: " + transfer.Amount);
+        }
+
+        public string TransferType(Transfer transfer)
+        {
+            string type = "";
+            if (transfer.TransferTypeId == 2)
+            {
+                type = "Sent";
+            }
+            else if (transfer.TransferTypeId == 1)
+            {
+                type = "Recieved";
+            }
+
+            return type;
+        }
+
+        public string TransferStatus(Transfer transfer)
+        {
+            string status = "";
+            if (transfer.TransferStatusId == 1)
+            {
+                status = "Pending";
+            } else if (transfer.TransferStatusId == 2)
+            {
+                status = "Approved";
+            } else if (transfer.TransferStatusId == 3)
+            {
+                status = "Rejected";
+            }
+            return status;
+        }
+
     }
 }
 
