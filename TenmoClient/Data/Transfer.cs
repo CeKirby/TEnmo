@@ -19,6 +19,7 @@ namespace TenmoClient.Data
         }
         public Transfer(int transferTypeId, int transferStatusId, int accountFrom, int accountTo, decimal amount)
         {
+           
             TransferTypeId = transferTypeId;
             TransferStatusId = transferStatusId;
             AccountFrom = accountFrom;

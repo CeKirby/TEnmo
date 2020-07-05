@@ -108,11 +108,13 @@ namespace TenmoClient
                         consoleService.PrintTransfers(pastTransfers);
                     }
                     Console.WriteLine("Please enter a transfer ID to view details(0 to cancel):");
-                    int userId = Convert.ToInt32(Console.ReadLine());
+                    int userInput = Convert.ToInt32(Console.ReadLine());
 
-                    if (userId == loggedInUserId)
+                    Data.Transfer transfer = new Data.Transfer();
+                    //userInput = transfer.TransferId;
+                    //   if (userInput == transfer.TransferStatusId)
                     {
-                        Data.Transfer transfers = authService.GetTransferDetails(loggedInUserId);
+                        Data.Transfer transfers = authService.GetTransferDetails(transfer.TransferId);
                         if (transfers != null)
                         {
                             Console.WriteLine(" Id: " + transfers.TransferId);
@@ -123,7 +125,7 @@ namespace TenmoClient
                             Console.WriteLine(" Amount: " + transfers.Amount);
                         }
                     }
-                }
+            }
 
                 else if (menuSelection == 3)
                 {
@@ -166,7 +168,7 @@ namespace TenmoClient
                             //create transfer (transfer contains (userIdFrom, userIdTo, amount, transfer type = 2)
                             Data.Account accountFrom = authService.GetAccount(loggedInUserId);
                             Data.Account accountTo = authService.GetAccount(userTo.UserId);
-                            Data.Transfer newTransfer = new Data.Transfer(2, 2, accountFrom.accountId, accountTo.accountId, amount);
+                            Data.Transfer newTransfer = new Data.Transfer( 2, 2, accountFrom.accountId, accountTo.accountId, amount);
                             if (newTransfer != null)
                             {
                                 Data.Transfer addedTransfer = authService.CreateTransfer(newTransfer);
