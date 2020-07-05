@@ -94,7 +94,7 @@ namespace TenmoServer.DAO
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT * FROM transfer WHERE transfer_id = @transferid", conn);
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM transfers WHERE transfer_id = @transferid", conn);
                     cmd.Parameters.AddWithValue("@transferid", transferId);
                     SqlDataReader reader = cmd.ExecuteReader();
                     if (reader.HasRows && reader.Read())
@@ -214,7 +214,7 @@ namespace TenmoServer.DAO
         {
             Transfer t = new Transfer()
             {
-                TransferId = Convert.ToInt32(reader["transfer_type_id"]),
+                TransferId = Convert.ToInt32(reader["transfer_id"]),
                 TransferTypeId = Convert.ToInt32(reader["transfer_type_id"]),
                 TransferStatusId = Convert.ToInt32(reader["transfer_status_id"]),
                 AccountFrom = Convert.ToInt32(reader["account_from"]),
